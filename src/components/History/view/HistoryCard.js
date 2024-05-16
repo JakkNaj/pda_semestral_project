@@ -30,7 +30,7 @@ const HistoryCard = ({ history }) => {
                     }
                     placement="bottom"
                     showChildInTooltip={false}
-                    contentStyle={{ padding: 0 }}
+                    contentStyle={{ padding: 0, marginTop: -50 }}
                     backgroundColor={"transparent"}
                 >
                     <View style={styles.rightCol}>
