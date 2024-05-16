@@ -9,6 +9,7 @@ import Icon from "react-native-vector-icons/FontAwesome6";
 import RoutineMenu from "./RoutineMenu";
 import AddRoutineModal from "./AddRoutineModal";
 import Tooltip from "react-native-walkthrough-tooltip";
+import TopButton from "../../common/buttons/TopButton";
 
 const RoutineDetailModal = ({ routine, modalVisible, setModalVisible }) => {
     const date = new Date(routine.creationDate);
@@ -20,9 +21,7 @@ const RoutineDetailModal = ({ routine, modalVisible, setModalVisible }) => {
         <CustomModal modalVisible={modalVisible} setModalVisible={setModalVisible} animation={"Right"}>
             <View>
                 <View style={styles.arrowBackWrapper}>
-                    <TouchableOpacity onPress={() => setModalVisible(false)}>
-                        <MaterialIcons name="arrow-back" size={24} color={colors.purple} />
-                    </TouchableOpacity>
+                    <TopButton onPress={() => setModalVisible(false)} icon="chevron-left" />
                 </View>
                 <ComponentHeader title={"Workout Routine"} />
             </View>

@@ -41,16 +41,12 @@ const [isDetailModalVisible, setIsDetailModalVisible] = useState(false);
                     </View>
                 </Tooltip>
             </View>
-            <View style={styles.photo}>
-                {history.photo ? (
+            {history.photo && <View style={styles.photo}>
                     <Image
                         source={{ uri: history.photo }}
                         style={{ width: "100%", height: "100%" }}
                     />
-                ) : (
-                    <Icon name="camera" size={160} color={colors.purple} />
-                )}
-            </View>
+            </View>}
             <HistoryDetailModal
                 history={history}
                 modalVisible={isDetailModalVisible}
