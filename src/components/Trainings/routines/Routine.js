@@ -11,6 +11,8 @@ import RoutineDetailModal from "../modals/RoutineDetailModal";
 import AddRoutineModal from "../modals/AddRoutineModal";
 import StartRoutineModal from "../startRoutine/StartRoutineModal";
 import Tooltip from 'react-native-walkthrough-tooltip';
+import {useSelector} from "react-redux";
+import {settingsSelector} from "../../Settings/reducer";
 
 const Routine = ({ routine }) => {
     const [showRoutinePopover, setShowRoutinePopover] = useState(false);

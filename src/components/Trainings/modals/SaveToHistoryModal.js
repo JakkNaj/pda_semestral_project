@@ -11,12 +11,14 @@ import * as ImagePicker from 'expo-image-picker';
 import {Camera} from "expo-camera";
 import { Image } from 'react-native';
 import * as FileSystem from 'expo-file-system';
+import {settingsSelector} from "../../Settings/reducer";
 
 
 const SaveToHistoryModal = ({ modalVisible, setModalVisible, setStartExerciseModalVisible, historyObject }) => {
     const dispatch = useDispatch();
     const historyData = useSelector(historySelector);
     const [photo, setPhoto] = useState(null);
+    const settings = useSelector(settingsSelector);
 
     const openCamera = async () => {
         const { status } = await Camera.requestCameraPermissionsAsync();
@@ -61,6 +63,7 @@ const SaveToHistoryModal = ({ modalVisible, setModalVisible, setStartExerciseMod
     const finalHistoryObject = {
         ...historyObject,
         photo: photo ?? null,
+        weightUnit: settings.weightUnit,
     }
 
     const saveHistory = () => {

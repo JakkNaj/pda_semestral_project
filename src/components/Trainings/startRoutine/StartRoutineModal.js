@@ -10,6 +10,11 @@ import Icon from "react-native-vector-icons/FontAwesome6";
 import {cloneDeep} from "lodash";
 import SaveToHistoryModal from "../modals/SaveToHistoryModal";
 import capitalizeFirstLetter from "../../common/helpers/capitalizeFirstLetter";
+import {
+    scheduleInactiveUserNotification, scheduleNotificationAfterWorkoutFinished,
+    scheduleTestingNotification
+} from "../../common/helpers/notificationScheduler";
+import {useSelector} from "react-redux";
 
 
 const StartRoutineModal = ({routine, modalVisible, setModalVisible}) => {
@@ -23,6 +28,9 @@ const StartRoutineModal = ({routine, modalVisible, setModalVisible}) => {
     const [finishTime, setFinishTime] = useState(null);
     const [exercisesFinishData, setExercisesFinishData] = useState([]);
     const [isSaveToHistoryModalVisible, setIsSaveToHistoryModalVisible] = useState(false);
+
+    const inactiveDays = useSelector(state => state.settings.inactiveDays);
+    const isNotificationEnabled = useSelector(state => state.settings.isNotificationEnabled);
 
     const [tableData, setTableData] = useState(() => {
         const currentExerciseCopy = cloneDeep(currentExercise);
@@ -70,6 +78,8 @@ const StartRoutineModal = ({routine, modalVisible, setModalVisible}) => {
         ])
         setIsTimerPaused(true)
         setFinishTime(new Date());
+        scheduleNotificationAfterWorkoutFinished(inactiveDays, isNotificationEnabled);
+        scheduleTestingNotification(inactiveDays, isNotificationEnabled);        // todo - REMOVE AFTER SHOWCASE
         setIsSaveToHistoryModalVisible(true);
     }
 

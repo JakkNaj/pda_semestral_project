@@ -7,10 +7,13 @@ import {saveHistoryToStorage} from "../../Trainings/actions";
 import {useDispatch, useSelector} from "react-redux";
 import {historySelector} from "../../Trainings/reducer";
 import capitalizeFirstLetter from "../../common/helpers/capitalizeFirstLetter";
+import {convertWeigthForDisplay} from "../../common/helpers/weightConvertor";
+import {settingsSelector} from "../../Settings/reducer";
 
 const HistoryMenu = ({ history, setIsDetailModalVisible }) => {
     const dispatch = useDispatch();
     const allHistory = useSelector(historySelector)
+    const selectedWeight = useSelector(settingsSelector).weightUnit;
 
     const handleViewClick = () => {
         setIsDetailModalVisible(true);
@@ -20,7 +23,7 @@ const HistoryMenu = ({ history, setIsDetailModalVisible }) => {
         try {
             const historyMessage = history?.exercises.map((exercise, index) => {
                 const exerciseSets = exercise.sets.map((set, setIndex) => {
-                    const weight = set[1] !== "-" ? `Weight: ${set[1]} ` : "";
+                    const weight = set[1] !== "-" ? `Weight: ${convertWeigthForDisplay(set[1], history, selectedWeight)} ${history.weightUnit}` : "";
                     const reps = set[2] !== "-" ? `Reps: ${set[2]} ` : "";
                     return `Set ${setIndex + 1}: ${weight} ${reps}`;
                 }).join('\n');

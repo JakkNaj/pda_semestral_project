@@ -17,4 +17,6 @@ const settingsReducer = (state = initialState, action) => {
 	}
 };
 
+export const settingsSelector = state => state.settings;
+
 export default settingsReducer;

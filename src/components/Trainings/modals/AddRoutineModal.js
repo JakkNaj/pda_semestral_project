@@ -7,6 +7,8 @@ import globalStyles from "../../common/GlobalStyles";
 import {useState} from "react";
 import AddExerciseModal from "./AddExerciseModal";
 import ExercisesList from "./ExercisesList";
+import {useSelector} from "react-redux";
+import {settingsSelector} from "../../Settings/reducer";
 
 const AddRoutineModal = ({ modalVisible, setModalVisible, routine }) => {
 
@@ -14,6 +16,8 @@ const AddRoutineModal = ({ modalVisible, setModalVisible, routine }) => {
     const [workoutTitle, setWorkoutTitle] = useState(routine ? routine.title : "");
     const [exercises, setExercises] = useState(routine && routine.exercises ? routine.exercises : []);
     const routineId = routine && routine.id ? routine.id : null;
+    const weightUnit = routine && routine.weightUnit? routine.weightUnit : useSelector(settingsSelector).weightUnit;
+
     return (
         <CustomModal
             setModalVisible={setModalVisible}
@@ -48,6 +52,7 @@ const AddRoutineModal = ({ modalVisible, setModalVisible, routine }) => {
                     workoutTitle={workoutTitle}
                     setModalVisible={setModalVisible}
                     routineId={routineId}
+                    weightUnit={weightUnit}
                 />
                 :
                 <View style={styles.addExerciseDiv}>

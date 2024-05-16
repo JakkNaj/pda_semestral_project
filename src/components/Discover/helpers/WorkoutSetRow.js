@@ -1,11 +1,16 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import {convertWeigthForDisplay} from "../../common/helpers/weightConvertor";
+import {settingsSelector} from "../../Settings/reducer";
+import {useSelector} from "react-redux";
 
 const WorkoutSetRow = ({ set }) => {
+	const selectedWeight = useSelector(settingsSelector).weightUnit;
+
 	return (
 		<View style={styles.container}>
 			<Text>{set.number}</Text>
-			<Text>{set.weight}</Text>
+			<Text>{convertWeigthForDisplay(set.weight, selectedWeight)}</Text>
 			<Text>{set.reps}</Text>
 		</View>
 	);
