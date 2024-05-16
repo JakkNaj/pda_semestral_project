@@ -9,7 +9,7 @@ import NextExerciseButton from "./NextExerciseButton";
 import Icon from "react-native-vector-icons/FontAwesome6";
 import {cloneDeep} from "lodash";
 import SaveToHistoryModal from "../modals/SaveToHistoryModal";
-import {kilogramsToPounds, poundsToKilograms} from "../../common/helpers/weightConvertor";
+import {convertedWeight} from "../../common/helpers/weightConvertor";
 import {useSelector} from "react-redux";
 import {settingsSelector} from "../../Settings/reducer";
 
@@ -27,21 +27,9 @@ const StartRoutineModal = ({routine, modalVisible, setModalVisible}) => {
     const [isSaveToHistoryModalVisible, setIsSaveToHistoryModalVisible] = useState(false);
     const selectedWeight = useSelector(settingsSelector).weightUnit;
 
-    const convertedWeight = (weight) => {
-        if (routine?.weightUnit === selectedWeight) {
-            return weight;
-        } else {
-            if (selectedWeight === "kg") {
-                return poundsToKilograms(weight);
-            } else {
-                return kilogramsToPounds(weight);
-            }
-        }
-    }
-
     const [tableData, setTableData] = useState(() => {
         const currentExerciseCopy = cloneDeep(currentExercise);
-        return currentExerciseCopy.sets.map((set, index) => [String(index + 1), convertedWeight(set[1]) || "", set[2] || "", ""])
+        return currentExerciseCopy.sets.map((set, index) => [String(index + 1), convertedWeight(set[1], routine, selectedWeight) || "", set[2] || "", ""])
     });
 
     const minutes = Math.floor(seconds / 60);
@@ -71,7 +59,7 @@ const StartRoutineModal = ({routine, modalVisible, setModalVisible}) => {
         setIsSaveToHistoryModalVisible(false);
         const currentExerciseCopy = cloneDeep(currentExercise);
         setTableData(
-            currentExerciseCopy.sets.map((set, index) => [String(index + 1), convertedWeight(set[1]) || "", set[2] || "", ""])
+            currentExerciseCopy.sets.map((set, index) => [String(index + 1), convertedWeight(set[1], routine, selectedWeight) || "", set[2] || "", ""])
         );
     };
 
