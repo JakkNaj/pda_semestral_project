@@ -91,9 +91,6 @@ const RoutineMenu = ({ routine, showView, closeMenu, setIsRoutineDetailModalVisi
 
 const styles = StyleSheet.create({
     container: {
-        borderWidth: 1,
-        borderColor: '#DCDCDC',
-        borderRadius: 8,
         display: 'flex',
         justifyContent: 'space-around',
         flexDirection: 'column',

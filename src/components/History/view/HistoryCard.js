@@ -15,8 +15,8 @@ const HistoryCard = ({ history }) => {
         <View style={styles.card}>
             <View style={styles.topWrapper}>
                 <View style={styles.leftCol}>
-                    <Text style={styles.trainingName}>{history.routineName}</Text>
-                    <Text style={styles.secondRow}>{history.finish}</Text>
+                    <Text style={styles.trainingName}>{history?.routineName}</Text>
+                    <Text style={styles.secondRow}>{history?.finish}</Text>
                 </View>
                 <Tooltip
                     isVisible={showHistoryMenu}
@@ -78,6 +78,7 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "column",
         alignItems: "flex-start",
+        paddingBottom: 10
     },
     rightCol: {
         display: "flex",
