@@ -15,6 +15,7 @@ import {
 } from "../../common/helpers/notificationScheduler";
 import {useSelector} from "react-redux";
 import {convertedWeight} from "../../common/helpers/weightConvertor";
+import {settingsSelector} from "../../Settings/reducer";
 
 
 const StartRoutineModal = ({routine, modalVisible, setModalVisible}) => {
