@@ -42,8 +42,6 @@ export const saveHistoryToStorage = (history) => async (dispatch) => {
     }
 }
 
-
-
 export const GET_TRAININGS_LOADING = 'GET_TRAININGS_LOADING';
 export const GET_TRAININGS_SUCCESS = 'GET_TRAININGS_SUCCESS';
 export const GET_TRAININGS_FAILURE = 'GET_TRAININGS_FAILURE';
@@ -58,10 +56,19 @@ export const getTrainingsFromStorage = () => {
             const response = await AsyncStorage.getItem(ROUTINES_KEY);
             if (response !== null) {
                 let data = JSON.parse(response);
+
+                const isValidDate = (dateString) => {
+                    const date = new Date(dateString);
+                    return !isNaN(date.getTime());
+                };
+
                 data = data.map(routine => ({
                     ...routine,
-                    creationDate: new Date(routine.creationDate).toISOString()
+                    creationDate: isValidDate(routine.creationDate)
+                        ? new Date(routine.creationDate).toISOString()
+                        : new Date().toISOString()
                 }));
+
                 dispatch({ type: GET_TRAININGS_SUCCESS, payload: data });
             } else {
                 dispatch({ type: GET_TRAININGS_SUCCESS, payload: [] });

@@ -13,11 +13,10 @@ export const getExercises = () => {
         try {
             const response = await fetch(`${process.env.RAPID_API_URL}/exercises?limit=1500`, {
                 headers: {
-                    'X-RapidAPI-Key': `3e952cbdd4msh40827180d5a55f7p1432fajsncfceac7dc933`,
+                    'X-RapidAPI-Key': '3e952cbdd4msh40827180d5a55f7p1432fajsncfceac7dc933',
                     'X-RapidAPI-Host': process.env.RAPID_API_HOST,
                 },
             });
-            console.log(process.env.RAPID_API_KEY)
 
             const data = await handleResponse(response);
             dispatch({ type: GET_EXERCISES_SUCCESS, payload: data });

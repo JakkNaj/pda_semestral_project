@@ -9,6 +9,7 @@ import Icon from "react-native-vector-icons/FontAwesome6";
 import RoutineMenu from "./RoutineMenu";
 import AddRoutineModal from "./AddRoutineModal";
 import Tooltip from "react-native-walkthrough-tooltip";
+import capitalizeFirstLetter from "../../common/helpers/capitalizeFirstLetter";
 import TopButton from "../../common/buttons/TopButton";
 import {useSelector} from "react-redux";
 import {settingsSelector} from "../../Settings/reducer";
@@ -69,7 +70,7 @@ const RoutineDetailModal = ({ routine, modalVisible, setModalVisible }) => {
 
                 {routine.exercises.map((exercise, index) => (
                     <View key={`routine-popup-${index}`}>
-                        <Text style={styles.exerciseName}>{exercise.name}</Text>
+                        <Text style={styles.exerciseName}>{capitalizeFirstLetter(exercise.name)}</Text>
                         <View style={styles.setsContainer}>
                             <SetRow set={{weight: `WEIGHT (${selectedWeight})`, reps: "REPS"}} index={"SET"} key={`set-row-head}`} />
                             {exercise.sets.map((set, index) => (

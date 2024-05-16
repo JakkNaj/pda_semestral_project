@@ -9,6 +9,7 @@ import NextExerciseButton from "./NextExerciseButton";
 import Icon from "react-native-vector-icons/FontAwesome6";
 import {cloneDeep} from "lodash";
 import SaveToHistoryModal from "../modals/SaveToHistoryModal";
+import capitalizeFirstLetter from "../../common/helpers/capitalizeFirstLetter";
 import {
     scheduleInactiveUserNotification, scheduleNotificationAfterWorkoutFinished,
     scheduleTestingNotification
@@ -71,8 +72,8 @@ const StartRoutineModal = ({routine, modalVisible, setModalVisible}) => {
         setExercisesFinishData([
             ...exercisesFinishData,
             {
-                name: currentExercise.name,
-                sets: tableData,
+                name: capitalizeFirstLetter(currentExercise.name),
+                sets: capitalizeFirstLetter(tableData),
             }
         ])
         setIsTimerPaused(true)
@@ -87,7 +88,7 @@ const StartRoutineModal = ({routine, modalVisible, setModalVisible}) => {
             setExercisesFinishData([
                 ...exercisesFinishData,
                 {
-                    name: currentExercise.name,
+                    name: capitalizeFirstLetter(currentExercise.name),
                     sets: tableData,
                 }
             ])
@@ -144,7 +145,7 @@ const StartRoutineModal = ({routine, modalVisible, setModalVisible}) => {
                 <View style={styles.bodyWrapper}>
                     <View key={`exercise-start-${currentExerciseIndex}`}>
                         <Text style={styles.normalText}>Exercise {currentExerciseIndex + 1}/{exercisesCount}</Text>
-                        <Text style={styles.exerciseName}>{currentExercise.name}</Text>
+                        <Text style={styles.exerciseName}>{capitalizeFirstLetter(currentExercise.name)}</Text>
 
                         <Table>
                             <Row data={tableHead} textStyle={styles.tableHeadText} />

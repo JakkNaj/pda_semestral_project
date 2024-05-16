@@ -8,8 +8,8 @@ import Tooltip from "react-native-walkthrough-tooltip";
 import { Image } from 'react-native';
 
 const HistoryCard = ({ history }) => {
-const [showHistoryMenu, setShowHistoryMenu] = useState(false);
-const [isDetailModalVisible, setIsDetailModalVisible] = useState(false);
+    const [showHistoryMenu, setShowHistoryMenu] = useState(false);
+    const [isDetailModalVisible, setIsDetailModalVisible] = useState(false);
 
     return (
         <View style={styles.card}>
@@ -51,6 +51,7 @@ const [isDetailModalVisible, setIsDetailModalVisible] = useState(false);
                 history={history}
                 modalVisible={isDetailModalVisible}
                 setModalVisible={setIsDetailModalVisible}
+                key={`history-modal-${history?.id}`}
             />
         </View>
     );
@@ -64,6 +65,7 @@ const styles = StyleSheet.create({
         padding: 16,
         backgroundColor: "#F1F4F8",
         borderRadius: 8,
+        marginBottom: 20
     },
     topWrapper: {
         display: "flex",

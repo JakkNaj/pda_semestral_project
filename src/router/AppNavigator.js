@@ -5,7 +5,6 @@ import colors from "../components/common/colors";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import {View} from "react-native";
 import {useSafeAreaStyles} from "../components/common/View.styles";
-import styles from "./AppNavigator.styles";
 
 const AppNavigator = () => {
 
