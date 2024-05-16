@@ -18,7 +18,9 @@ const Trainings = () => {
             </View>
             <ComponentHeader title={"Workout Routines"}/>
             <View>
-                <RoutineList />
+                <RoutineList
+                    setModalVisible={setModalVisible}
+                />
             </View>
         </ScrollView>
     )

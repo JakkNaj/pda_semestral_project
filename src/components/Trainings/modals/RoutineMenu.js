@@ -6,6 +6,7 @@ import {saveRoutinesToStorage} from "../actions";
 import Toast from "react-native-toast-message";
 import colors from "../../common/colors";
 import {trainingsSelector} from "../reducer";
+import capitalizeFirstLetter from "../../common/helpers/capitalizeFirstLetter";
 
 const RoutineMenu = ({ routine, showView, closeMenu, setIsRoutineDetailModalVisible, setIsAddRoutineModalVisible }) => {
     const dispatch = useDispatch();
@@ -29,7 +30,7 @@ const RoutineMenu = ({ routine, showView, closeMenu, setIsRoutineDetailModalVisi
                     const reps = set[2] !== "-" ? `Reps: ${set[2]} ` : "";
                     return `Set ${setIndex + 1}: ${weight} ${reps}`;
                 }).join('\n');
-                return `Exercise ${index + 1}: ${exercise.name}\n${exerciseSets}`;
+                return `Exercise ${index + 1}: ${capitalizeFirstLetter(exercise.name)}\n${exerciseSets}`;
             }).join('\n\n');
 
             const result = await Share.share({

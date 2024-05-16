@@ -9,6 +9,7 @@ import { StyleSheet } from "react-native";
 import WorkoutSetRow from "../helpers/WorkoutSetRow";
 import Button from '../../common/buttons/Button';
 import TopButton from "../../common/buttons/TopButton";
+import capitalizeFirstLetter from "../../common/helpers/capitalizeFirstLetter";
 
 const WorkoutDetailModal = ({ setSelectedWorkout, workout, isAdded, onAdd, setModalVisible, modalVisible }) => {
 	const commonStyles = useSafeAreaStyles();
@@ -47,7 +48,7 @@ const WorkoutDetailModal = ({ setSelectedWorkout, workout, isAdded, onAdd, setMo
 
 				{workout.exercises.map((exercise, index) => (
 					<View key={index}>
-						<Text style={styles.exerciseName}>{exercise.name}</Text>
+						<Text style={styles.exerciseName}>{capitalizeFirstLetter(exercise.name)}</Text>
 						<View style={styles.setsContainer}>
 							<WorkoutSetRow set={{number: "SET", weight: "WEIGHT", reps: "REPS"}} />
 							{exercise.sets.map((set, index) => (

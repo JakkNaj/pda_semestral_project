@@ -22,7 +22,6 @@ const Discover = () => {
     const commonStyles = useSafeAreaStyles();
 
     const handleAdd = (workout) => {
-        console.log(`Adding ${workout.title} from Discover page`);
         dispatch(saveRoutinesToStorage([...trainings, {...workout, id: Date.now().toString()}]))
     }
 

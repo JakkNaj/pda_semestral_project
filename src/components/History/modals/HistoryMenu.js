@@ -6,6 +6,7 @@ import Toast from "react-native-toast-message";
 import {saveHistoryToStorage} from "../../Trainings/actions";
 import {useDispatch, useSelector} from "react-redux";
 import {historySelector} from "../../Trainings/reducer";
+import capitalizeFirstLetter from "../../common/helpers/capitalizeFirstLetter";
 
 const HistoryMenu = ({ history, setIsDetailModalVisible }) => {
     const dispatch = useDispatch();
@@ -23,7 +24,7 @@ const HistoryMenu = ({ history, setIsDetailModalVisible }) => {
                     const reps = set[2] !== "-" ? `Reps: ${set[2]} ` : "";
                     return `Set ${setIndex + 1}: ${weight} ${reps}`;
                 }).join('\n');
-                return `Exercise ${index + 1}: ${exercise.name}\n${exerciseSets}`;
+                return `Exercise ${index + 1}: ${capitalizeFirstLetter(exercise.name)}\n${exerciseSets}`;
             }).join('\n\n');
 
             const result = await Share.share({
