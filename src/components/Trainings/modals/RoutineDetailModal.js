@@ -9,15 +9,29 @@ import Icon from "react-native-vector-icons/FontAwesome6";
 import RoutineMenu from "./RoutineMenu";
 import AddRoutineModal from "./AddRoutineModal";
 import Tooltip from "react-native-walkthrough-tooltip";
-import {convertedWeight} from "../../common/helpers/weightConvertor";
+import {kilogramsToPounds, poundsToKilograms} from "../../common/helpers/weightConvertor";
 import {useSelector} from "react-redux";
 import {settingsSelector} from "../../Settings/reducer";
 
-const RoutineDetailModal = ({ routine, modalVisible, setModalVisible }) => {
+const RoutineDetailModal = ({ routine, modalVisible, setModalVisible, weightUnit }) => {
     const date = new Date(routine.creationDate);
     const [showRoutineMenu, setShowRoutineMenu] = useState(false);
     const [isAddRoutineModalVisible, setIsAddRoutineModalVisible] = useState(false);
     const selectedWeight = useSelector(settingsSelector).weightUnit;
+
+
+    const convertedWeight = (weight) => {
+        if (weightUnit === selectedWeight) {
+            return weight;
+        } else {
+            if (selectedWeight === "kg") {
+                return poundsToKilograms(weight);
+            } else {
+                return kilogramsToPounds(weight);
+            }
+        }
+    }
+
 
     return (
         <CustomModal modalVisible={modalVisible} setModalVisible={setModalVisible} animation={"Right"}>
@@ -73,7 +87,7 @@ const RoutineDetailModal = ({ routine, modalVisible, setModalVisible }) => {
                         <View style={styles.setsContainer}>
                             <SetRow set={{weight: "WEIGHT", reps: "REPS"}} index={"SET"} key={`set-row-head}`} />
                             {exercise.sets.map((set, index) => (
-                                <SetRow set={{weight: convertedWeight(set[1], routine, selectedWeight), reps: set[2]}} index={index + 1} key={`set-row-${index}`}/>
+                                <SetRow set={{weight: convertedWeight(set[1]), reps: set[2]}} index={index + 1} key={`set-row-${index}`}/>
                             ))}
                         </View>
                     </View>

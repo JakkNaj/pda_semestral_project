@@ -6,8 +6,8 @@ import Toast from "react-native-toast-message";
 import {saveHistoryToStorage} from "../../Trainings/actions";
 import {useDispatch, useSelector} from "react-redux";
 import {historySelector} from "../../Trainings/reducer";
-import {convertedWeight} from "../../common/helpers/weightConvertor";
 import {settingsSelector} from "../../Settings/reducer";
+import {kilogramsToPounds, poundsToKilograms} from "../../common/helpers/weightConvertor";
 
 const HistoryMenu = ({ history, setIsDetailModalVisible }) => {
     const dispatch = useDispatch();
@@ -18,11 +18,23 @@ const HistoryMenu = ({ history, setIsDetailModalVisible }) => {
         setIsDetailModalVisible(true);
     };
 
+    const convertedWeight = (weight) => {
+        if (history?.weightUnit === selectedWeight) {
+            return weight;
+        } else {
+            if (selectedWeight === "kg") {
+                return poundsToKilograms(weight);
+            } else {
+                return kilogramsToPounds(weight);
+            }
+        }
+    }
+
     const handleShareClick = async () => {
         try {
             const historyMessage = history?.exercises.map((exercise, index) => {
                 const exerciseSets = exercise.sets.map((set, setIndex) => {
-                    const weight = set[1] !== "-" ? `Weight: ${convertedWeight(set[1], history, selectedWeight)} ${history.weightUnit}` : "";
+                    const weight = set[1] !== "-" ? `Weight: ${convertedWeight(set[1])} ${history.weightUnit}` : "";
                     const reps = set[2] !== "-" ? `Reps: ${set[2]} ` : "";
                     return `Set ${setIndex + 1}: ${weight} ${reps}`;
                 }).join('\n');

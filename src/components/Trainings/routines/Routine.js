@@ -19,6 +19,7 @@ const Routine = ({ routine }) => {
     const [isRoutineDetailModalVisible, setIsRoutineDetailModalVisible] = useState(false);
     const [isAddRoutineModalVisible, setIsAddRoutineModalVisible] = useState(false);
     const [isStartRoutineModalVisible, setIsStartRoutineModalVisible] = useState(false);
+    const weightUnit = routine?.weightUnit ?? useSelector(settingsSelector).weightUnit;
 
     return (
         <View style={styles.container}>
@@ -70,6 +71,7 @@ const Routine = ({ routine }) => {
                     routine={routine}
                     modalVisible={isRoutineDetailModalVisible}
                     setModalVisible={setIsRoutineDetailModalVisible}
+                    weightUnit={weightUnit}
                 />
                 <View style={{ position: "absolute", bottom: -10, right: -10 }}>
                     <Button title="Start" onPress={() => setIsStartRoutineModalVisible(true)} />

@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react";
-import {Row, Table} from "react-native-table-component";
-import {Text, TextInput, TouchableOpacity, View} from "react-native";
+import { Row, Table } from "react-native-table-component";
+import { Text, TextInput, View, TouchableOpacity } from "react-native";
 import styles from "./AddRoutineModal.styles";
 import globalStyles from "../../common/GlobalStyles";
 import colors from "../../common/colors";
 import Icon from "react-native-vector-icons/FontAwesome6";
 import capitalizeFirstLetter from "../../common/helpers/capitalizeFirstLetter";
-import {convertedWeight} from "../../common/helpers/weightConvertor";
+import { kilogramsToPounds, poundsToKilograms } from "../../common/helpers/weightConvertor";
 import {useSelector} from "react-redux";
 import {settingsSelector} from "../../Settings/reducer";
 
@@ -14,9 +14,21 @@ const Exercise = ({ exercise, setExercises, exercises, weightUnit }) => {
     const tableHead = ["SET", "WEIGHT", "REPS", ""];
     const selectedWeight = useSelector(settingsSelector).weightUnit;
 
+    const convertedWeight = (weight) => {
+        if (weightUnit === selectedWeight) {
+            return weight;
+        } else {
+            if (selectedWeight === "kg") {
+                return poundsToKilograms(weight);
+            } else {
+                return kilogramsToPounds(weight);
+            }
+        }
+    }
+
     const initialTableData = exercise && exercise.sets && exercise.sets.length > 0
         ? exercise.sets.map((set, index) => {
-            return [String(index + 1), convertedWeight(set[1], { weightUnit: weightUnit }, selectedWeight) || "", set[2] || "", ""];
+            return [String(index + 1), convertedWeight(set[1]) || "", set[2] || "", ""];
         })
         : [["1", "", "", ""]];
 
