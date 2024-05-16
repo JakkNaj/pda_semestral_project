@@ -9,9 +9,11 @@ import NextExerciseButton from "./NextExerciseButton";
 import Icon from "react-native-vector-icons/FontAwesome6";
 import {cloneDeep} from "lodash";
 import SaveToHistoryModal from "../modals/SaveToHistoryModal";
-import {convertedWeight} from "../../common/helpers/weightConvertor";
+import {
+    scheduleInactiveUserNotification, scheduleNotificationAfterWorkoutFinished,
+    scheduleTestingNotification
+} from "../../common/helpers/notificationScheduler";
 import {useSelector} from "react-redux";
-import {settingsSelector} from "../../Settings/reducer";
 
 
 const StartRoutineModal = ({routine, modalVisible, setModalVisible}) => {
@@ -25,11 +27,13 @@ const StartRoutineModal = ({routine, modalVisible, setModalVisible}) => {
     const [finishTime, setFinishTime] = useState(null);
     const [exercisesFinishData, setExercisesFinishData] = useState([]);
     const [isSaveToHistoryModalVisible, setIsSaveToHistoryModalVisible] = useState(false);
-    const selectedWeight = useSelector(settingsSelector).weightUnit;
+
+    const inactiveDays = useSelector(state => state.settings.inactiveDays);
+    const isNotificationEnabled = useSelector(state => state.settings.isNotificationEnabled);
 
     const [tableData, setTableData] = useState(() => {
         const currentExerciseCopy = cloneDeep(currentExercise);
-        return currentExerciseCopy.sets.map((set, index) => [String(index + 1), convertedWeight(set[1], routine, selectedWeight) || "", set[2] || "", ""])
+        return currentExerciseCopy.sets.map((set, index) => [String(index + 1), set[1] || "-", set[2] || "-", ""])
     });
 
     const minutes = Math.floor(seconds / 60);
@@ -39,7 +43,7 @@ const StartRoutineModal = ({routine, modalVisible, setModalVisible}) => {
     const formattedSeconds = String(remainingSeconds).padStart(2, '0');
 
     const addRow = () => {
-        const newRow = [String(tableData.length + 1), "", "", ""];
+        const newRow = [String(tableData.length + 1), "-", "-", ""];
         setTableData([...tableData, newRow]);
     };
 
@@ -59,7 +63,7 @@ const StartRoutineModal = ({routine, modalVisible, setModalVisible}) => {
         setIsSaveToHistoryModalVisible(false);
         const currentExerciseCopy = cloneDeep(currentExercise);
         setTableData(
-            currentExerciseCopy.sets.map((set, index) => [String(index + 1), convertedWeight(set[1], routine, selectedWeight) || "", set[2] || "", ""])
+            currentExerciseCopy.sets.map((set, index) => [String(index + 1), set[1] || "-", set[2] || "-", ""])
         );
     };
 
@@ -73,6 +77,8 @@ const StartRoutineModal = ({routine, modalVisible, setModalVisible}) => {
         ])
         setIsTimerPaused(true)
         setFinishTime(new Date());
+        scheduleNotificationAfterWorkoutFinished(inactiveDays, isNotificationEnabled);
+        scheduleTestingNotification(inactiveDays, isNotificationEnabled);        // todo - REMOVE AFTER SHOWCASE
         setIsSaveToHistoryModalVisible(true);
     }
 
@@ -111,20 +117,17 @@ const StartRoutineModal = ({routine, modalVisible, setModalVisible}) => {
     useEffect(() => {
         const currentExercise = routine.exercises[currentExerciseIndex];
         setTableData(
-            currentExercise?.sets.map((set, index) => [String(index + 1), set[1] || "", set[2] || "", ""])
+            currentExercise?.sets.map((set, index) => [String(index + 1), set[1] || "-", set[2] || "-", ""])
         );
     }, [currentExerciseIndex]);
-
-    useEffect(() => {
-        if (modalVisible) {
-            resetData();
-        }
-    }, [modalVisible]);
 
     return (
         <CustomModal
             modalVisible={modalVisible}
             setModalVisible={setModalVisible}
+            onClose={() => {
+                resetData()
+            }}
         >
             <View style={styles.topWrapper}>
                 <View style={{width: 115}}>
@@ -166,16 +169,9 @@ const StartRoutineModal = ({routine, modalVisible, setModalVisible}) => {
                                                     <TextInput
                                                         style={{ textAlign: "center" }}
                                                         key={`start-exercise-${columnIndex}`}
-                                                        onChangeText={(text) => {
-                                                            // Only update the state if the input is a number
-                                                            if (/^\d*\.?\d*$/.test(text)) {
-                                                                onChangeText(text, rowIndex, columnIndex);
-                                                            }
-                                                        }}
+                                                        onChangeText={(text) => onChangeText(text, rowIndex, columnIndex)}
                                                         value={cellData}
-                                                        placeholder="-" // Set placeholder to "-"
                                                         editable={columnIndex === 1 || columnIndex === 2}
-                                                        keyboardType="numeric" // Display numeric keyboard
                                                     />
                                                 </View>
                                             );

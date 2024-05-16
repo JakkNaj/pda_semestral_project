@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setInactiveDays, setNotificationEnabled, setWeightUnit } from "../actions";
 import { useSafeAreaStyles } from "../../common/View.styles";
 import globalStyles from "../../common/GlobalStyles";
+import * as Notifications from "expo-notifications";
 
 const Settings = () => {
     const dispatch = useDispatch();
@@ -63,6 +64,10 @@ const Settings = () => {
 
     const changeNotificationEnabled = (value) => {
         dispatch(setNotificationEnabled(value));
+        if (!value) {
+            console.log("Cancelling all notifications");
+            Notifications.cancelAllScheduledNotificationsAsync();
+        }
         console.log('Changing notification enabled to: ', value);
     }
 

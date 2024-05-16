@@ -35,8 +35,6 @@ const AppContent = () => {
 
     const isDataLoaded = !!(fontsLoaded && exercisesData.length > 0)
 
-    // console.log(exercisesData)
-
     return isDataLoaded
         ? <AppNavigator />
         : <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
