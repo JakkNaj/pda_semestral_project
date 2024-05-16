@@ -6,7 +6,7 @@ import Toast from "react-native-toast-message";
 import {saveHistoryToStorage} from "../../Trainings/actions";
 import {useDispatch, useSelector} from "react-redux";
 import {historySelector} from "../../Trainings/reducer";
-import {convertedWeight} from "../../common/helpers/weightConvertor";
+import {convertWeigthForDisplay} from "../../common/helpers/weightConvertor";
 import {settingsSelector} from "../../Settings/reducer";
 
 const HistoryMenu = ({ history, setIsDetailModalVisible }) => {
@@ -22,7 +22,7 @@ const HistoryMenu = ({ history, setIsDetailModalVisible }) => {
         try {
             const historyMessage = history?.exercises.map((exercise, index) => {
                 const exerciseSets = exercise.sets.map((set, setIndex) => {
-                    const weight = set[1] !== "-" ? `Weight: ${convertedWeight(set[1], history, selectedWeight)} ${history.weightUnit}` : "";
+                    const weight = set[1] !== "-" ? `Weight: ${convertWeigthForDisplay(set[1], history, selectedWeight)} ${history.weightUnit}` : "";
                     const reps = set[2] !== "-" ? `Reps: ${set[2]} ` : "";
                     return `Set ${setIndex + 1}: ${weight} ${reps}`;
                 }).join('\n');

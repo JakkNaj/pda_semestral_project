@@ -10,8 +10,12 @@ import RoutineMenu from "./RoutineMenu";
 import AddRoutineModal from "./AddRoutineModal";
 import Tooltip from "react-native-walkthrough-tooltip";
 import TopButton from "../../common/buttons/TopButton";
+import {useSelector} from "react-redux";
+import {settingsSelector} from "../../Settings/reducer";
+import {convertWeigthForDisplay, kilogramsToPounds} from "../../common/helpers/weightConvertor";
 
 const RoutineDetailModal = ({ routine, modalVisible, setModalVisible }) => {
+    const selectedWeight = useSelector(settingsSelector).weightUnit;
     const date = new Date(routine.creationDate);
     const [showRoutineMenu, setShowRoutineMenu] = useState(false);
     const [isAddRoutineModalVisible, setIsAddRoutineModalVisible] = useState(false);
@@ -67,10 +71,14 @@ const RoutineDetailModal = ({ routine, modalVisible, setModalVisible }) => {
                     <View key={`routine-popup-${index}`}>
                         <Text style={styles.exerciseName}>{exercise.name}</Text>
                         <View style={styles.setsContainer}>
-                            <SetRow set={{weight: "WEIGHT", reps: "REPS"}} index={"SET"} key={`set-row-head}`} />
+                            <SetRow set={{weight: `WEIGHT (${selectedWeight})`, reps: "REPS"}} index={"SET"} key={`set-row-head}`} />
                             {exercise.sets.map((set, index) => (
-                                <SetRow set={{weight: set[1], reps: set[2]}} index={index + 1} key={`set-row-${index}`}/>
-                            ))}
+                                    <SetRow
+                                        set={{weight: convertWeigthForDisplay(set[1], selectedWeight), reps: set[2]}}
+                                        index={index + 1}
+                                        key={`set-row-${index}`}
+                                    />
+                                ))}
                         </View>
                     </View>
                 ))}

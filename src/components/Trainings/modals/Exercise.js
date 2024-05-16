@@ -6,17 +6,18 @@ import globalStyles from "../../common/GlobalStyles";
 import colors from "../../common/colors";
 import Icon from "react-native-vector-icons/FontAwesome6";
 import capitalizeFirstLetter from "../../common/helpers/capitalizeFirstLetter";
-import {convertedWeight} from "../../common/helpers/weightConvertor";
+import {convertWeightToKg} from "../../common/helpers/weightConvertor";
 import {useSelector} from "react-redux";
 import {settingsSelector} from "../../Settings/reducer";
 
 const Exercise = ({ exercise, setExercises, exercises, weightUnit }) => {
-    const tableHead = ["SET", "WEIGHT", "REPS", ""];
     const selectedWeight = useSelector(settingsSelector).weightUnit;
+
+    const tableHead = ["SET", `WEIGHT (${selectedWeight})`, "REPS", ""];
 
     const initialTableData = exercise && exercise.sets && exercise.sets.length > 0
         ? exercise.sets.map((set, index) => {
-            return [String(index + 1), convertedWeight(set[1], { weightUnit: weightUnit }, selectedWeight) || "", set[2] || "", ""];
+            return [String(index + 1), set[1] || "-", set[2] || "-", "-"];
         })
         : [["1", "", "", ""]];
 

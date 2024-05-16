@@ -5,6 +5,7 @@ import Exercise from "./Exercise";
 import {useDispatch, useSelector} from "react-redux";
 import {saveRoutinesToStorage} from "../actions";
 import {trainingsSelector} from "../reducer";
+import {convertWeightToKg} from "../../common/helpers/weightConvertor";
 
 const ExercisesList = ({ exercises, setExercises, workoutTitle, setModalVisible, routineId, weightUnit }) => {
 
@@ -16,11 +17,20 @@ const ExercisesList = ({ exercises, setExercises, workoutTitle, setModalVisible,
         const title = workoutTitle.trim() === "" ? "Untitled workout routine" : workoutTitle;
         const creationDate = new Date();
 
+        // Convert all weights to kilograms before saving
+        const exercisesInKg = exercises.map(exercise => {
+            const setsInKg = exercise.sets.map(set => {
+                const weightInKg = convertWeightToKg(set[1], weightUnit);
+                return [set[0], weightInKg, set[2]];
+            });
+            return { ...exercise, sets: setsInKg };
+        });
+
         const updatedTrainings = [
             ...(trainings.filter(routine => routine.id !== routineId) ?? []),
             {
                 title: title,
-                exercises: exercises,
+                exercises: exercisesInKg,
                 creationDate: creationDate.toString(),
                 id: routineId ?? Date.now().toString(),
                 weightUnit: weightUnit,
@@ -47,7 +57,7 @@ const ExercisesList = ({ exercises, setExercises, workoutTitle, setModalVisible,
                 })}
                 <View style={{ marginTop: 15 }}>
                     <Button
-                        title="Add to workout routine"
+                        title="Add workout to workout routines"
                         onClick={() => handleSubmit()}
                     />
                 </View>
