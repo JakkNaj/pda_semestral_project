@@ -192,6 +192,7 @@ const StartRoutineModal = ({routine, modalVisible, setModalVisible}) => {
                 setStartExerciseModalVisible={setModalVisible}
                 historyObject={
                     {
+                        routineId: routine.id,
                         routineName: routine.title,
                         start: startTime?.toLocaleString(),
                         finish: finishTime?.toLocaleString(),

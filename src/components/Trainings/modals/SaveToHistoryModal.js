@@ -4,34 +4,58 @@ import CustomModal from "../../common/CustomModal";
 import colors from "../../common/colors";
 import Button from "../../common/buttons/Button";
 import {useState} from "react";
-import {launchCamera, launchImageLibrary} from "react-native-image-picker";
 import {saveHistoryToStorage} from "../actions";
 import {useDispatch, useSelector} from "react-redux";
 import {historySelector} from "../reducer";
+import * as ImagePicker from 'expo-image-picker';
+import {Camera} from "expo-camera";
+import { Image } from 'react-native';
+import * as FileSystem from 'expo-file-system';
+
 
 const SaveToHistoryModal = ({ modalVisible, setModalVisible, setStartExerciseModalVisible, historyObject }) => {
     const dispatch = useDispatch();
     const historyData = useSelector(historySelector);
     const [photo, setPhoto] = useState(null);
 
-    const openImagePicker = () => {
-        const options = {
-            mediaType: 'photo',
-            includeBase64: false,
-            maxHeight: 2000,
-            maxWidth: 2000,
-        };
+    const openCamera = async () => {
+        const { status } = await Camera.requestCameraPermissionsAsync();
+        if (status !== 'granted') {
+            alert('Sorry, we need camera permissions to make this work!');
+            return;
+        }
 
-        launchImageLibrary(options, (response) => {
-            if (response.didCancel) {
-                console.log('User cancelled image picker');
-            } else if (response.error) {
-                console.log('Image picker error: ', response.error);
-            } else {
-                let imageUri = response.uri || response.assets?.[0]?.uri;
-                setPhoto(imageUri);
-            }
+        let result = await ImagePicker.launchCameraAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
         });
+
+        if (!result.canceled) {
+            setPhoto(result.assets[0].uri);
+            await handleAddImage(result.assets[0].uri);
+        }
+    };
+
+    const handleAddImage = async (uri) => {
+        if (!uri) {
+            console.error("No URI provided to handleAddImage" + uri);
+            return;
+        }
+
+        const fileName = uri.split('/').pop();
+        const newPath = FileSystem.documentDirectory + fileName;
+
+        try {
+            await FileSystem.copyAsync({
+                from: uri,
+                to: newPath
+            });
+            historyObject[historyObject.routineId] = newPath; // Store the new path in the historyObject with the historyObject.id as the key
+        } catch (err) {
+            console.error('Error saving the image to filesystem', err);
+        }
     };
 
     const finalHistoryObject = {
@@ -45,6 +69,7 @@ const SaveToHistoryModal = ({ modalVisible, setModalVisible, setStartExerciseMod
             finalHistoryObject
         ]))
     }
+
 
     return (
         <CustomModal
@@ -93,7 +118,13 @@ const SaveToHistoryModal = ({ modalVisible, setModalVisible, setStartExerciseMod
                         {historyObject?.finish}
                     </Text>
                 </View>
-                <Button title={"Take a Photo"} onPress={openImagePicker} />
+                <Button title={!!photo ? "Retake photo" : "Take photo"} onPress={openCamera} />
+                {!!photo && (
+                    <Image
+                        source={{ uri: photo }}
+                        style={{ width: "100%", aspectRatio: 1}}
+                    />
+                )}
             </View>
         </CustomModal>
     )

@@ -5,6 +5,7 @@ import colors from "../../common/colors";
 import HistoryMenu from "../modals/HistoryMenu";
 import HistoryDetailModal from "../modals/HistoryDetailModal";
 import Tooltip from "react-native-walkthrough-tooltip";
+import { Image } from 'react-native';
 
 const HistoryCard = ({ history }) => {
 const [showHistoryMenu, setShowHistoryMenu] = useState(false);
@@ -41,7 +42,14 @@ const [isDetailModalVisible, setIsDetailModalVisible] = useState(false);
                 </Tooltip>
             </View>
             <View style={styles.photo}>
-                <Icon name="camera" size={160} color={colors.purple} />
+                {history.photo ? (
+                    <Image
+                        source={{ uri: history.photo }}
+                        style={{ width: "100%", height: "100%" }}
+                    />
+                ) : (
+                    <Icon name="camera" size={160} color={colors.purple} />
+                )}
             </View>
             <HistoryDetailModal
                 history={history}

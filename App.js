@@ -12,7 +12,6 @@ import {exercisesSelector} from "./src/components/Exercises/reducer";
 import {getHistoryFromStorage, getTrainingsFromStorage} from "./src/components/Trainings/actions";
 import {DefaultTheme, NavigationContainer} from "@react-navigation/native";
 import LottieView from "lottie-react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 if (__DEV__) {
     require("./ReactotronConfig");
 }
@@ -35,6 +34,8 @@ const AppContent = () => {
     });
 
     const isDataLoaded = !!(fontsLoaded && exercisesData.length > 0)
+
+    console.log(exercisesData)
 
     return isDataLoaded
         ? <AppNavigator />
