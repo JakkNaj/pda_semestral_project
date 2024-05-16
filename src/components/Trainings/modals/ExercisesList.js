@@ -6,7 +6,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {saveRoutinesToStorage} from "../actions";
 import {trainingsSelector} from "../reducer";
 
-const ExercisesList = ({ exercises, setExercises, workoutTitle, setModalVisible, routineId }) => {
+const ExercisesList = ({ exercises, setExercises, workoutTitle, setModalVisible, routineId, weightUnit }) => {
 
     const dispatch = useDispatch();
 
@@ -22,7 +22,8 @@ const ExercisesList = ({ exercises, setExercises, workoutTitle, setModalVisible,
                 title: title,
                 exercises: exercises,
                 creationDate: creationDate.toString(),
-                id: routineId ?? Date.now().toString()
+                id: routineId ?? Date.now().toString(),
+                weightUnit: weightUnit,
             }
         ];
 
@@ -35,7 +36,13 @@ const ExercisesList = ({ exercises, setExercises, workoutTitle, setModalVisible,
             <ScrollView horizontal={false} showsVerticalScrollIndicator={false}>
                 {exercises.map((exercise, index) => {
                     return (
-                        <Exercise key={`exercise-${index}`} exercise={exercise} exercises={exercises} setExercises={setExercises} />
+                        <Exercise
+                            key={`exercise-${index}`}
+                            exercise={exercise}
+                            exercises={exercises}
+                            setExercises={setExercises}
+                            weightUnit={weightUnit}
+                        />
                     )
                 })}
                 <View style={{ marginTop: 15 }}>

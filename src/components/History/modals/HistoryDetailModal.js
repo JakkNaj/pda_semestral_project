@@ -5,8 +5,23 @@ import {MaterialIcons} from "@expo/vector-icons";
 import colors from "../../common/colors";
 import ComponentHeader from "../../common/ComponentHeader";
 import SetRow from "../../Trainings/modals/SetRow";
+import {kilogramsToPounds, poundsToKilograms} from "../../common/helpers/weightConvertor";
+import {useSelector} from "react-redux";
+import {settingsSelector} from "../../Settings/reducer";
 
 const HistoryDetailModal = ({ history, modalVisible, setModalVisible }) => {
+    const selectedWeight = useSelector(settingsSelector).weightUnit;
+    const convertedWeight = (weight) => {
+        if (history?.weightUnit === selectedWeight) {
+            return weight;
+        } else {
+            if (selectedWeight === "kg") {
+                return poundsToKilograms(weight);
+            } else {
+                return kilogramsToPounds(weight);
+            }
+        }
+    }
 
     return (
         <CustomModal modalVisible={modalVisible} setModalVisible={setModalVisible} animation={"Right"}>
@@ -47,7 +62,7 @@ const HistoryDetailModal = ({ history, modalVisible, setModalVisible }) => {
                         <View style={styles.setsContainer}>
                             <SetRow set={{weight: "WEIGHT", reps: "REPS"}} index={"SET"} key={`set-row-head}`} />
                             {exercise.sets.map((set, index) => (
-                                <SetRow set={{weight: set[1], reps: set[2]}} index={index + 1} key={`set-row-${index}`}/>
+                                <SetRow set={{weight: convertedWeight(set[1]), reps: set[2]}} index={index + 1} key={`set-row-${index}`}/>
                             ))}
                         </View>
                     </View>

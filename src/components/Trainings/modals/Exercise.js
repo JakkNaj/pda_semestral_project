@@ -6,18 +6,37 @@ import globalStyles from "../../common/GlobalStyles";
 import colors from "../../common/colors";
 import Icon from "react-native-vector-icons/FontAwesome6";
 import capitalizeFirstLetter from "../../common/helpers/capitalizeFirstLetter";
+import { kilogramsToPounds, poundsToKilograms } from "../../common/helpers/weightConvertor";
+import {useSelector} from "react-redux";
+import {settingsSelector} from "../../Settings/reducer";
 
-const Exercise = ({ exercise, setExercises, exercises }) => {
+const Exercise = ({ exercise, setExercises, exercises, weightUnit }) => {
     const tableHead = ["SET", "WEIGHT", "REPS", ""];
+    const selectedWeight = useSelector(settingsSelector).weightUnit;
+
+    const convertedWeight = (weight) => {
+        if (weightUnit === selectedWeight) {
+            return weight;
+        } else {
+            if (selectedWeight === "kg") {
+                return poundsToKilograms(weight);
+            } else {
+                return kilogramsToPounds(weight);
+            }
+        }
+    }
 
     const initialTableData = exercise && exercise.sets && exercise.sets.length > 0
-        ? exercise.sets.map((set, index) => [String(index + 1), set[1] || "-", set[2] || "-", ""])
-        : [["1", "-", "-", ""]];
+        ? exercise.sets.map((set, index) => {
+            return [String(index + 1), convertedWeight(set[1]) || "", set[2] || "", ""];
+        })
+        : [["1", "", "", ""]];
+
 
     const [tableData, setTableData] = useState(initialTableData);
 
     const addRow = () => {
-        const newRow = [String(tableData.length + 1), "-", "-", ""];
+        const newRow = [String(tableData.length + 1), "", "", ""];
         setTableData([...tableData, newRow]);
     };
 
@@ -80,9 +99,16 @@ const Exercise = ({ exercise, setExercises, exercises }) => {
                                             <TextInput
                                                 style={{ textAlign: "center" }}
                                                 key={columnIndex}
-                                                onChangeText={(text) => onChangeText(text, rowIndex, columnIndex)}
+                                                onChangeText={(text) => {
+                                                    // Only update the state if the input is a number
+                                                    if (/^\d*\.?\d*$/.test(text)) {
+                                                        onChangeText(text, rowIndex, columnIndex);
+                                                    }
+                                                }}
                                                 value={cellData}
+                                                placeholder="-" // Set placeholder to "-"
                                                 editable={columnIndex === 1 || columnIndex === 2}
+                                                keyboardType="numeric" // Display numeric keyboard
                                             />
                                         </View>
                                     );

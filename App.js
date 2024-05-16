@@ -35,7 +35,7 @@ const AppContent = () => {
 
     const isDataLoaded = !!(fontsLoaded && exercisesData.length > 0)
 
-    console.log(exercisesData)
+    // console.log(exercisesData)
 
     return isDataLoaded
         ? <AppNavigator />

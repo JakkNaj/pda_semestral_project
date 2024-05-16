@@ -11,12 +11,15 @@ import RoutineDetailModal from "../modals/RoutineDetailModal";
 import AddRoutineModal from "../modals/AddRoutineModal";
 import StartRoutineModal from "../startRoutine/StartRoutineModal";
 import Tooltip from 'react-native-walkthrough-tooltip';
+import {useSelector} from "react-redux";
+import {settingsSelector} from "../../Settings/reducer";
 
 const Routine = ({ routine }) => {
     const [showRoutinePopover, setShowRoutinePopover] = useState(false);
     const [isRoutineDetailModalVisible, setIsRoutineDetailModalVisible] = useState(false);
     const [isAddRoutineModalVisible, setIsAddRoutineModalVisible] = useState(false);
     const [isStartRoutineModalVisible, setIsStartRoutineModalVisible] = useState(false);
+    const weightUnit = routine?.weightUnit ?? useSelector(settingsSelector).weightUnit;
 
     return (
         <View style={styles.container}>
@@ -68,6 +71,7 @@ const Routine = ({ routine }) => {
                     routine={routine}
                     modalVisible={isRoutineDetailModalVisible}
                     setModalVisible={setIsRoutineDetailModalVisible}
+                    weightUnit={weightUnit}
                 />
                 <View style={{ position: "absolute", bottom: -10, right: -10 }}>
                     <Button title="Start" onPress={() => setIsStartRoutineModalVisible(true)} />

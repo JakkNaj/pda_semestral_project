@@ -17,6 +17,7 @@ export const getExercises = () => {
                     'X-RapidAPI-Host': process.env.RAPID_API_HOST,
                 },
             });
+            console.log(process.env.RAPID_API_KEY)
 
             const data = await handleResponse(response);
             dispatch({ type: GET_EXERCISES_SUCCESS, payload: data });
