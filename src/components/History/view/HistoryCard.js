@@ -25,7 +25,10 @@ const HistoryCard = ({ history }) => {
                     content={
                         <HistoryMenu
                             history={history}
-                            setIsDetailModalVisible={() => setIsDetailModalVisible(true)}
+                            setIsDetailModalVisible={() => {
+                                setIsDetailModalVisible(true)
+                                setShowHistoryMenu(false)
+                            }}
                         />
                     }
                     placement="bottom"

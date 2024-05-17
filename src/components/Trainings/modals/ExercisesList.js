@@ -17,7 +17,6 @@ const ExercisesList = ({ exercises, setExercises, workoutTitle, setModalVisible,
         const title = workoutTitle.trim() === "" ? "Untitled workout routine" : workoutTitle;
         const creationDate = new Date();
 
-        // Convert all weights to kilograms before saving
         const exercisesInKg = exercises.map(exercise => {
             const setsInKg = exercise.sets.map(set => {
                 const weightInKg = convertWeightToKg(set[1], weightUnit);

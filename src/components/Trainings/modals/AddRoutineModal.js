@@ -10,7 +10,7 @@ import ExercisesList from "./ExercisesList";
 import {useSelector} from "react-redux";
 import {settingsSelector} from "../../Settings/reducer";
 
-const AddRoutineModal = ({ modalVisible, setModalVisible, routine }) => {
+const AddRoutineModal = ({modalVisible, setModalVisible, routine}) => {
 
     const [exercisesOpen, setExercisesOpen] = useState(false)
     const [workoutTitle, setWorkoutTitle] = useState(routine ? routine.title : "");
@@ -42,7 +42,7 @@ const AddRoutineModal = ({ modalVisible, setModalVisible, routine }) => {
                     value={workoutTitle}
                     onChangeText={setWorkoutTitle}
                 />
-                <TopButton onPress={() => setExercisesOpen(true)} icon="circle-plus" />
+                <TopButton onPress={() => setExercisesOpen(true)} icon="circle-plus"/>
             </View>
             {exercises.length > 0
                 ?
@@ -57,8 +57,9 @@ const AddRoutineModal = ({ modalVisible, setModalVisible, routine }) => {
                 :
                 <View style={styles.addExerciseDiv}>
                     <Text style={styles.addExerciseTitle}>Add an exercise</Text>
-                    <Text style={{...styles.addExerciseText, ...globalStyles.defaultText}}>Get started by adding exercises to your workout routine</Text>
-                    <View style={{ width: 200 }}>
+                    <Text style={{...styles.addExerciseText, ...globalStyles.defaultText}}>Get started by adding
+                        exercises to your workout routine</Text>
+                    <View style={{width: 200}}>
                         <Button
                             title="Add exercise"
                             onClick={() => setExercisesOpen(true)}

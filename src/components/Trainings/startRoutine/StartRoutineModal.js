@@ -100,11 +100,11 @@ const StartRoutineModal = ({routine, modalVisible, setModalVisible}) => {
 
     useEffect(() => {
         let timer = null;
-        if (modalVisible && !isTimerPaused) { // Check if isPaused is false
-            setStartTime(new Date()); // Set the start time when the timer starts
+        if (modalVisible && !isTimerPaused) {
+            setStartTime(new Date());
             timer = setInterval(() => {
                 setSeconds(seconds => seconds + 1);
-            }, 1000); // Update time every second
+            }, 1000);
         }
 
         return () => {

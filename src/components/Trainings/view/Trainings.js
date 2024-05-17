@@ -10,8 +10,7 @@ import globalStyles from "../../common/GlobalStyles";
 const Trainings = () => {
     const [modalVisible, setModalVisible] = useState(false)
 
-    return (
-        <ScrollView showsVerticalScrollIndicator={false} style={globalStyles.defaultPadding}>
+    return (<ScrollView showsVerticalScrollIndicator={false} style={globalStyles.defaultPadding}>
             <View style={styles.addButtonContainer}>
                 <AddRoutineModal modalVisible={modalVisible} setModalVisible={setModalVisible}/>
                 <TopButton onPress={() => setModalVisible(true)} icon="circle-plus"/>
@@ -22,8 +21,7 @@ const Trainings = () => {
                     setModalVisible={setModalVisible}
                 />
             </View>
-        </ScrollView>
-    )
+        </ScrollView>)
 }
 
 export default Trainings

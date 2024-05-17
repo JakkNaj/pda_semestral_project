@@ -54,7 +54,7 @@ const SaveToHistoryModal = ({ modalVisible, setModalVisible, setStartExerciseMod
                 from: uri,
                 to: newPath
             });
-            historyObject[historyObject.routineId] = newPath; // Store the new path in the historyObject with the historyObject.id as the key
+            historyObject[historyObject.routineId] = newPath;
         } catch (err) {
             console.error('Error saving the image to filesystem', err);
         }
@@ -122,12 +122,12 @@ const SaveToHistoryModal = ({ modalVisible, setModalVisible, setStartExerciseMod
                     </Text>
                 </View>
                 <Button title={!!photo ? "Retake photo" : "Take photo"} onPress={openCamera} />
-                {!!photo && (
+                {!!photo ? (
                     <Image
                         source={{ uri: photo }}
                         style={{ width: "100%", aspectRatio: 1}}
                     />
-                )}
+                ) : null}
             </View>
         </CustomModal>
     )

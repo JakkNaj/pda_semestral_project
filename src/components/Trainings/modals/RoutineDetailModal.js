@@ -15,7 +15,7 @@ import {useSelector} from "react-redux";
 import {settingsSelector} from "../../Settings/reducer";
 import {convertWeigthForDisplay, kilogramsToPounds} from "../../common/helpers/weightConvertor";
 
-const RoutineDetailModal = ({ routine, modalVisible, setModalVisible }) => {
+const RoutineDetailModal = ({routine, modalVisible, setModalVisible}) => {
     const selectedWeight = useSelector(settingsSelector).weightUnit;
     const date = new Date(routine.creationDate);
     const [showRoutineMenu, setShowRoutineMenu] = useState(false);
@@ -26,9 +26,9 @@ const RoutineDetailModal = ({ routine, modalVisible, setModalVisible }) => {
         <CustomModal modalVisible={modalVisible} setModalVisible={setModalVisible} animation={"Right"}>
             <View>
                 <View style={styles.arrowBackWrapper}>
-                    <TopButton onPress={() => setModalVisible(false)} icon="chevron-left" />
+                    <TopButton onPress={() => setModalVisible(false)} icon="chevron-left"/>
                 </View>
-                <ComponentHeader title={"Workout Routine"} />
+                <ComponentHeader title={"Workout Routine"}/>
             </View>
             <ScrollView>
                 <View style={styles.descContainer}>
@@ -39,7 +39,7 @@ const RoutineDetailModal = ({ routine, modalVisible, setModalVisible }) => {
                                 <Tooltip
                                     isVisible={showRoutineMenu}
                                     onClose={() => setShowRoutineMenu(false)}
-                                    arrowSize={{ width: 0, height: 0 }}
+                                    arrowSize={{width: 0, height: 0}}
                                     content={
                                         <RoutineMenu
                                             routine={routine}
@@ -50,16 +50,17 @@ const RoutineDetailModal = ({ routine, modalVisible, setModalVisible }) => {
                                         />
                                     }
                                     placement="bottom"
-                                    contentStyle={{ padding: 0 }}
+                                    contentStyle={{padding: 0}}
                                     backgroundColor={"transparent"}
                                 >
                                     <TouchableOpacity onPress={() => setShowRoutineMenu(true)}>
-                                        <Icon name="ellipsis" size={25} color={colors.purple} />
+                                        <Icon name="ellipsis" size={25} color={colors.purple}/>
                                     </TouchableOpacity>
                                 </Tooltip>
                             </View>
                         </View>
-                        <Text style={styles.workoutTarget}>{routine.creationDate ? `Created ${date.toDateString()}` : ""}</Text>
+                        <Text
+                            style={styles.workoutTarget}>{routine.creationDate ? `Created ${date.toDateString()}` : ""}</Text>
                     </View>
                 </View>
                 <AddRoutineModal
@@ -72,14 +73,15 @@ const RoutineDetailModal = ({ routine, modalVisible, setModalVisible }) => {
                     <View key={`routine-popup-${index}`}>
                         <Text style={styles.exerciseName}>{capitalizeFirstLetter(exercise.name)}</Text>
                         <View style={styles.setsContainer}>
-                            <SetRow set={{weight: `WEIGHT (${selectedWeight})`, reps: "REPS"}} index={"SET"} key={`set-row-head}`} />
+                            <SetRow set={{weight: `WEIGHT (${selectedWeight})`, reps: "REPS"}} index={"SET"}
+                                    key={`set-row-head}`}/>
                             {exercise.sets.map((set, index) => (
-                                    <SetRow
-                                        set={{weight: convertWeigthForDisplay(set[1], selectedWeight), reps: set[2]}}
-                                        index={index + 1}
-                                        key={`set-row-${index}`}
-                                    />
-                                ))}
+                                <SetRow
+                                    set={{weight: convertWeigthForDisplay(set[1], selectedWeight), reps: set[2]}}
+                                    index={index + 1}
+                                    key={`set-row-${index}`}
+                                />
+                            ))}
                         </View>
                     </View>
                 ))}
