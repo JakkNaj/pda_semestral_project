@@ -17,7 +17,7 @@ const Settings = () => {
     const dispatch = useDispatch();
     const settings = useSelector(state => state.settings);
 
-    const isNotificationEnabled = useSelector(state => state.settings.isNotificationEnabled);
+    const [isNotificationEnabled, setIsNotificationEnabled] = useState(settings.isNotificationEnabled);
     const weightUnit = useSelector(state => state.settings.weightUnit);
     const inactiveDays = useSelector(state => state.settings.inactiveDays);
 
@@ -67,13 +67,14 @@ const Settings = () => {
     }
 
     const changeNotificationEnabled = (value) => {
+        setIsNotificationEnabled(value); // Optimistically update the state in the UI
         const newSettings = { ...settings, isNotificationEnabled: value };
-        dispatch(saveSettings(newSettings));
         if (!value) {
             console.log("Cancelling all notifications");
             Notifications.cancelAllScheduledNotificationsAsync();
         }
         console.log('Changing notification enabled to: ', value);
+        dispatch(saveSettings(newSettings)); // Then dispatch the action to update the Redux state and AsyncStorage
     }
 
     return (
@@ -102,8 +103,8 @@ const Settings = () => {
             <NotificationModal
                 modalVisible={isNotificationModalVisible}
                 setModalVisible={setIsNotificationModalVisible}
-                notificationsActive={isNotificationEnabled}
-                setNotificationsActive={changeNotificationEnabled}
+                isNotificationEnabled={isNotificationEnabled}
+                changeNotificationEnabled={changeNotificationEnabled}
                 inactiveDays={inactiveDays}
                 setInactiveDays={changeInactiveDays}
             />

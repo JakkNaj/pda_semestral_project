@@ -1,4 +1,3 @@
-// NotificationsModal.js
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -7,7 +6,7 @@ import colors from "../../common/colors";
 import NotificationRow from "../helpers/NotificationRow";
 import TopButton from "../../common/buttons/TopButton";
 
-const NotificationsModal = ({ modalVisible, setModalVisible, notificationsActive, setNotificationsActive, inactiveDays, setInactiveDays }) => {
+const NotificationsModal = ({ modalVisible, setModalVisible, isNotificationEnabled, changeNotificationEnabled, inactiveDays, setInactiveDays }) => {
 	const closeModal = () => {
 		setModalVisible(false);
 	}
@@ -21,7 +20,7 @@ const NotificationsModal = ({ modalVisible, setModalVisible, notificationsActive
 			</View>
 			<View style={styles.sectionContainer}>
 				<Text style={styles.sectionTitle}>System default</Text>
-				<NotificationRow text="Activate notifications" isSwitch={true} switchValue={notificationsActive} onSwitchValueChange={setNotificationsActive} />
+				<NotificationRow text="Activate notifications" isSwitch={true} switchValue={isNotificationEnabled} onSwitchValueChange={changeNotificationEnabled} />
 				<NotificationRow text="Inactive days until notification" isNumberPicker={true} numberPickerValue={inactiveDays} onNumberPickerValueChange={setInactiveDays} />
 			</View>
 		</CustomModal>
