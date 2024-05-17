@@ -10,15 +10,19 @@ export const kilogramsToPounds = (kilograms) => {
 
 
 export const convertWeigthForDisplay = (weight, selectedWeight) => {
+    weight = parseInt(weight) ? parseInt(weight) : weight;
     if (typeof weight === 'number' && selectedWeight === 'lbs') {
         return kilogramsToPounds(weight);
     }
-    return weight;
+    return String(weight);
 }
 
 export const convertWeightToKg = (weight, selectedWeight) => {
+    weight = parseInt(weight) ? parseInt(weight) : weight;
+    console.log("convertWeightToKg")
     if (typeof weight === 'number' && selectedWeight === 'lbs') {
+        console.log("back to kg")
         return poundsToKilograms(weight);
     }
-    return weight;
+    return String(weight);
 }

@@ -15,6 +15,8 @@ import {
     scheduleTestingNotification
 } from "../../common/helpers/notificationScheduler";
 import {useSelector} from "react-redux";
+import {convertWeightToKg, convertWeigthForDisplay} from "../../common/helpers/weightConvertor";
+import {settingsSelector} from "../../Settings/reducer";
 
 
 const StartRoutineModal = ({routine, modalVisible, setModalVisible}) => {
@@ -23,7 +25,6 @@ const StartRoutineModal = ({routine, modalVisible, setModalVisible}) => {
     const [isTimerPaused, setIsTimerPaused] = useState(false);
     const currentExercise = routine.exercises[currentExerciseIndex];
     const exercisesCount = routine.exercises.length;
-    const tableHead = ["SET", "WEIGHT", "REPS", "DONE"];
     const [startTime, setStartTime] = useState(null);
     const [finishTime, setFinishTime] = useState(null);
     const [exercisesFinishData, setExercisesFinishData] = useState([]);
@@ -31,10 +32,12 @@ const StartRoutineModal = ({routine, modalVisible, setModalVisible}) => {
 
     const inactiveDays = useSelector(state => state.settings.inactiveDays);
     const isNotificationEnabled = useSelector(state => state.settings.isNotificationEnabled);
+    const selectedWeight = useSelector(settingsSelector).weightUnit;
+    const tableHead = ["SET", `WEIGHT (${selectedWeight})`, "REPS", "DONE"];
 
     const [tableData, setTableData] = useState(() => {
         const currentExerciseCopy = cloneDeep(currentExercise);
-        return currentExerciseCopy.sets.map((set, index) => [String(index + 1), set[1] || "-", set[2] || "-", ""])
+        return currentExerciseCopy.sets.map((set, index) => [String(index + 1), convertWeigthForDisplay(set[1], selectedWeight) || "-", set[2] || "-", ""])
     });
 
     const minutes = Math.floor(seconds / 60);
@@ -64,16 +67,30 @@ const StartRoutineModal = ({routine, modalVisible, setModalVisible}) => {
         setIsSaveToHistoryModalVisible(false);
         const currentExerciseCopy = cloneDeep(currentExercise);
         setTableData(
-            currentExerciseCopy.sets.map((set, index) => [String(index + 1), set[1] || "-", set[2] || "-", ""])
+            currentExerciseCopy.sets.map((set, index) => [String(index + 1), convertWeigthForDisplay(set[1], selectedWeight) || "-", set[2] || "-", ""])
         );
     };
+
+    const convertTableData = (tableData) => {
+        return tableData.map((rowData) => {
+            console.log(rowData)
+            return rowData.map((cellData, columnIndex) => {
+                console.log(cellData, columnIndex)
+                if (columnIndex === 1) {
+                    return convertWeightToKg(cellData, selectedWeight) || "-";
+                } else {
+                    return cellData;
+                }
+            });
+        });
+    }
 
     const endExercise = () => {
         setExercisesFinishData([
             ...exercisesFinishData,
             {
                 name: capitalizeFirstLetter(currentExercise.name),
-                sets: capitalizeFirstLetter(tableData),
+                sets: convertTableData(tableData),
             }
         ])
         setIsTimerPaused(true)
@@ -118,7 +135,7 @@ const StartRoutineModal = ({routine, modalVisible, setModalVisible}) => {
     useEffect(() => {
         const currentExercise = routine.exercises[currentExerciseIndex];
         setTableData(
-            currentExercise?.sets.map((set, index) => [String(index + 1), set[1] || "-", set[2] || "-", ""])
+            currentExercise?.sets.map((set, index) => [String(index + 1), convertWeigthForDisplay(set[1], selectedWeight) || "-", set[2] || "-", ""])
         );
     }, [currentExerciseIndex]);
 

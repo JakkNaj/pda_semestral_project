@@ -8,6 +8,7 @@ import Icon from "react-native-vector-icons/FontAwesome6";
 import capitalizeFirstLetter from "../../common/helpers/capitalizeFirstLetter";
 import {useSelector} from "react-redux";
 import {settingsSelector} from "../../Settings/reducer";
+import {convertWeigthForDisplay} from "../../common/helpers/weightConvertor";
 
 const Exercise = ({exercise, setExercises, exercises, weightUnit}) => {
     const selectedWeight = useSelector(settingsSelector).weightUnit;
@@ -16,7 +17,7 @@ const Exercise = ({exercise, setExercises, exercises, weightUnit}) => {
 
     const initialTableData = exercise && exercise.sets && exercise.sets.length > 0
         ? exercise.sets.map((set, index) => {
-            return [String(index + 1), set[1] || "", set[2] || "", ""];
+            return [String(index + 1), convertWeigthForDisplay(set[1], selectedWeight) || "", set[2] || "", ""];
         })
         : [["1", "", "", ""]];
 
