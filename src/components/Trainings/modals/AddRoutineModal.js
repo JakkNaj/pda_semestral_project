@@ -10,7 +10,7 @@ import ExercisesList from "./ExercisesList";
 import {useSelector} from "react-redux";
 import {settingsSelector} from "../../Settings/reducer";
 
-const AddRoutineModal = ({modalVisible, setModalVisible, routine}) => {
+const AddRoutineModal = ({ modalVisible, setModalVisible, routine, fromEdit = false }) => {
 
     const [exercisesOpen, setExercisesOpen] = useState(false)
     const [workoutTitle, setWorkoutTitle] = useState(routine ? routine.title : "");
@@ -24,10 +24,6 @@ const AddRoutineModal = ({modalVisible, setModalVisible, routine}) => {
             modalVisible={modalVisible}
             modalId={"add-routine-modal"}
             swipeOff={true}
-            onClose={() => {
-                setExercises([]);
-                setWorkoutTitle("");
-            }}
         >
             <View style={styles.topButtonsContainer}>
                 <TopButton
@@ -53,6 +49,7 @@ const AddRoutineModal = ({modalVisible, setModalVisible, routine}) => {
                     setModalVisible={setModalVisible}
                     routineId={routineId}
                     weightUnit={weightUnit}
+                    fromEdit={fromEdit}
                 />
                 :
                 <View style={styles.addExerciseDiv}>

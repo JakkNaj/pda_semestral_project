@@ -7,17 +7,17 @@ export const popularWorkouts = [
 			{
 				name: 'Crunches',
 				sets: [
-					{ number: 1, weight: 70, reps: 15 },
-					{ number: 2, weight: 80, reps: 20 },
-					{ number: 3, weight: 80, reps: 15 },
+					["1", "70", "15"],
+					["2", "80", "20"],
+					["3", "80", "15"],
 				]
 			},
 			{
 				name: 'Pull-ups',
 				sets: [
-					{ number: 1, weight: "bodyweight", reps: 15 },
-					{ number: 2, weight: "bodyweight", reps: 20 },
-					{ number: 3, weight: "bodyweight", reps: 30 },
+					["1", "60", "15"],
+					["2", "60", "20"],
+					["3", "60", "30"],
 				]
 			},
 		]
@@ -30,9 +30,9 @@ export const popularWorkouts = [
 			{
 				name: 'Bicep Curls',
 				sets: [
-					{ number: 1, weight: 15, reps: 10 },
-					{ number: 2, weight: 30, reps: 20 },
-					{ number: 3, weight: 45, reps: 20 },
+					["1", "15", "10"],
+					["2", "30", "20"],
+					["3", "45", "20"],
 				]
 			},
 		]
@@ -48,9 +48,9 @@ export const forBeginners = [
 			{
 				name: 'Shoulder Press',
 				sets: [
-					{ number: 1, weight: 20, reps: 10 },
-					{ number: 2, weight: 25, reps: 10 },
-					{ number: 3, weight: 30, reps: 10 },
+					["1", "20", "10"],
+					["2", "25", "10"],
+					["3", "30", "10"],
 				]
 			},
 			// Add more exercises as needed
@@ -64,9 +64,9 @@ export const forBeginners = [
 			{
 				name: 'Deadlift',
 				sets: [
-					{ number: 1, weight: 60, reps: 10 },
-					{ number: 2, weight: 70, reps: 10 },
-					{ number: 3, weight: 80, reps: 10 },
+					["1", "60", "10"],
+					["2", "70", "10"],
+					["3", "80", "10"],
 				]
 			},
 		]
@@ -79,9 +79,9 @@ export const forBeginners = [
 			{
 				name: 'Squats',
 				sets: [
-					{ number: 1, weight: 50, reps: 10 },
-					{ number: 2, weight: 60, reps: 10 },
-					{ number: 3, weight: 70, reps: 10 },
+					["1", "50", "10"],
+					["2", "60", "10"],
+					["3", "70", "10"],
 				]
 			},
 		]
@@ -97,9 +97,9 @@ export const upperBodyOnly = [
 			{
 				name: 'Sit-ups',
 				sets: [
-					{ number: 1, weight: 0, reps: 15 },
-					{ number: 2, weight: 0, reps: 15 },
-					{ number: 3, weight: 0, reps: 15 },
+					["1", "0", "15"],
+					["2", "0", "15"],
+					["3", "0", "15"],
 				]
 			},
 		]
@@ -112,9 +112,9 @@ export const upperBodyOnly = [
 			{
 				name: 'Push-ups',
 				sets: [
-					{ number: 1, weight: 0, reps: 15 },
-					{ number: 2, weight: 0, reps: 15 },
-					{ number: 3, weight: 0, reps: 15 },
+					["1", "0", "15"],
+					["2", "0", "15"],
+					["3", "0", "15"],
 				]
 			},
 		]
