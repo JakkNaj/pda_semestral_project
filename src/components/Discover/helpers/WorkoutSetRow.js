@@ -9,9 +9,9 @@ const WorkoutSetRow = ({ set }) => {
 
 	return (
 		<View style={styles.container}>
-			<Text>{set.number}</Text>
-			<Text>{convertWeigthForDisplay(set.weight, selectedWeight)}</Text>
-			<Text>{set.reps}</Text>
+			<Text>{set[0]}</Text>
+			<Text>{convertWeigthForDisplay(set[1], selectedWeight)}</Text>
+			<Text>{set[2]}</Text>
 		</View>
 	);
 }

@@ -8,13 +8,15 @@ import styles  from "./Settings.styles";
 import UnitsModal from "../modals/UnitsModal";
 import NotificationModal from "../modals/NotificationModal";
 import { useDispatch, useSelector } from "react-redux";
-import { setInactiveDays, setNotificationEnabled, setWeightUnit } from "../actions";
 import { useSafeAreaStyles } from "../../common/View.styles";
 import globalStyles from "../../common/GlobalStyles";
 import * as Notifications from "expo-notifications";
+import { saveSettings } from "../actions";
 
 const Settings = () => {
     const dispatch = useDispatch();
+    const settings = useSelector(state => state.settings);
+
     const isNotificationEnabled = useSelector(state => state.settings.isNotificationEnabled);
     const weightUnit = useSelector(state => state.settings.weightUnit);
     const inactiveDays = useSelector(state => state.settings.inactiveDays);
@@ -52,18 +54,21 @@ const Settings = () => {
     }
 
     const changeWeightUnits = (unit) => {
-        dispatch(setWeightUnit(unit));
+        const newSettings = { ...settings, weightUnit: unit };
+        dispatch(saveSettings(newSettings));
         console.log('Changing units to: ', unit);
         setIsUnitModalVisible(false);
     }
 
     const changeInactiveDays = (days) => {
-        dispatch(setInactiveDays(days));
+        const newSettings = { ...settings, inactiveDays: days };
+        dispatch(saveSettings(newSettings));
         console.log('Changing inactive days to: ', days);
     }
 
     const changeNotificationEnabled = (value) => {
-        dispatch(setNotificationEnabled(value));
+        const newSettings = { ...settings, isNotificationEnabled: value };
+        dispatch(saveSettings(newSettings));
         if (!value) {
             console.log("Cancelling all notifications");
             Notifications.cancelAllScheduledNotificationsAsync();

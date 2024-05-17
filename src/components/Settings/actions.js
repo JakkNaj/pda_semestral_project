@@ -1,54 +1,43 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export const SET_NOTIFICATION_ENABLED = 'SET_NOTIFICATION_ENABLED';
-export const SET_WEIGHT_UNIT = 'SET_WEIGHT_UNIT';
-export const SET_INACTIVE_DAYS = 'SET_INACTIVE_DAYS';
+export const GET_SETTINGS_LOADING = 'GET_SETTINGS_LOADING';
+export const GET_SETTINGS_SUCCESS = 'GET_SETTINGS_SUCCESS';
+export const GET_SETTINGS_FAILURE = 'GET_SETTINGS_FAILURE';
 
 const SETTINGS_KEY = 'settings';
 
-export const loadSettings = () => async (dispatch) => {
+export const saveSettings = (settings) => async (dispatch) => {
+	dispatch({
+		type: 'SAVE_SETTINGS_LOADING',
+	});
 	try {
-		const settings = await AsyncStorage.getItem(SETTINGS_KEY);
-		if (settings) {
-			const { isNotificationEnabled, weightUnit, inactiveDays } = JSON.parse(settings);
-			dispatch(setNotificationEnabled(isNotificationEnabled));
-			dispatch(setWeightUnit(weightUnit));
-			dispatch(setInactiveDays(inactiveDays));
-		}
-	} catch (error) {
-		console.error('Error loading settings: ', error);
-	}
-};
-
-export const setNotificationEnabled = (value) => async (dispatch) => {
-	dispatch({
-		type: SET_NOTIFICATION_ENABLED,
-		payload: value,
-	});
-	await saveSettings();
-};
-
-export const setWeightUnit = (value) => async (dispatch) => {
-	dispatch({
-		type: SET_WEIGHT_UNIT,
-		payload: value,
-	});
-	await saveSettings();
-};
-
-export const setInactiveDays = (value) => async (dispatch) => {
-	dispatch({
-		type: SET_INACTIVE_DAYS,
-		payload: value,
-	});
-	await saveSettings();
-};
-
-const saveSettings = () => async (dispatch, getState) => {
-	try {
-		const settings = getState().settings;
 		await AsyncStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+		dispatch({ type: 'SAVE_SETTINGS_SUCCESS'});
+		dispatch({ type: 'GET_SETTINGS_SUCCESS', payload: settings });
 	} catch (error) {
 		console.error('Error saving settings: ', error);
+		dispatch({ type: 'SAVE_SETTINGS_FAILURE', payload: error });
 	}
 };
+
+export const getSettingsFromStorage = () => {
+	return async (dispatch) => {
+		dispatch({
+			type: 'GET_SETTINGS_LOADING',
+		});
+
+		try {
+			const response = await AsyncStorage.getItem(SETTINGS_KEY);
+			if (response !== null) {
+				let data = JSON.parse(response);
+
+				dispatch({ type: 'GET_SETTINGS_SUCCESS', payload: data });
+			} else {
+				dispatch({ type: 'GET_SETTINGS_FAILURE', payload: 'No settings found' });
+			}
+		} catch (error) {
+			console.error('Error getting settings: ', error);
+			dispatch({ type: 'GET_SETTINGS_FAILURE', payload: error });
+		}
+	};
+}

@@ -6,7 +6,7 @@ import {Provider, useDispatch, useSelector} from "react-redux";
 import Toast from 'react-native-toast-message';
 import {store} from "./src/api/store";
 import { View } from "react-native";
-import { loadSettings } from "./src/components/Settings/actions";
+import {getSettingsFromStorage, loadSettings} from "./src/components/Settings/actions";
 import {getExercises} from "./src/components/Exercises/actions";
 import {exercisesSelector} from "./src/components/Exercises/reducer";
 import {getHistoryFromStorage, getTrainingsFromStorage} from "./src/components/Trainings/actions";
@@ -22,7 +22,7 @@ const AppContent = () => {
     const exercisesData = useSelector(exercisesSelector)
 
     useEffect(() => {
-        dispatch(loadSettings());
+        dispatch(getSettingsFromStorage());
         dispatch(getExercises());
         dispatch(getTrainingsFromStorage());
         dispatch(getHistoryFromStorage());

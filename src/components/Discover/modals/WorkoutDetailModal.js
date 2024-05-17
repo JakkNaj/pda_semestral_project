@@ -53,7 +53,7 @@ const WorkoutDetailModal = ({ setSelectedWorkout, workout, isAdded, onAdd, setMo
 					<View key={index}>
 						<Text style={styles.exerciseName}>{capitalizeFirstLetter(exercise.name)}</Text>
 						<View style={styles.setsContainer}>
-							<WorkoutSetRow set={{number: "SET", weight: `WEIGHT ${selectedWeight}`, reps: "REPS"}} />
+							<WorkoutSetRow set={["SET", `WEIGHT ${selectedWeight}`,"REPS"]} />
 							{exercise.sets.map((set, index) => (
 								<WorkoutSetRow set={set} key={index} selectedWeight={selectedWeight}/>
 							))}
