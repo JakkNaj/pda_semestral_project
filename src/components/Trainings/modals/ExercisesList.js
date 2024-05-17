@@ -7,7 +7,7 @@ import {saveRoutinesToStorage} from "../actions";
 import {trainingsSelector} from "../reducer";
 import {convertWeightToKg} from "../../common/helpers/weightConvertor";
 
-const ExercisesList = ({ exercises, setExercises, workoutTitle, setModalVisible, routineId, weightUnit }) => {
+const ExercisesList = ({ exercises, setExercises, workoutTitle, setModalVisible, routineId, weightUnit, fromEdit }) => {
 
     const dispatch = useDispatch();
 
@@ -56,7 +56,7 @@ const ExercisesList = ({ exercises, setExercises, workoutTitle, setModalVisible,
                 })}
                 <View style={{ marginTop: 15 }}>
                     <Button
-                        title="Add workout to workout routines"
+                        title={ fromEdit ? "Update workout routine" : "Add to workout routine"}
                         onClick={() => handleSubmit()}
                     />
                 </View>

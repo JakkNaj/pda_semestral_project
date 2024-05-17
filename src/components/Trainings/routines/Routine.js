@@ -66,6 +66,7 @@ const Routine = ({routine}) => {
                     setModalVisible={setIsAddRoutineModalVisible}
                     routine={routine}
                     key={`add-routine-modal-${routine.id}`}
+                    fromEdit={true}
                 />
                 <RoutineDetailModal
                     key={routine.id}

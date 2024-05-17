@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import CustomModal from '../../common/CustomModal';
-import {MaterialIcons} from "@expo/vector-icons";
 import colors from "../../common/colors";
 import ComponentHeader from "../../common/ComponentHeader";
 import SetRow from "./SetRow";
@@ -13,7 +12,7 @@ import capitalizeFirstLetter from "../../common/helpers/capitalizeFirstLetter";
 import TopButton from "../../common/buttons/TopButton";
 import {useSelector} from "react-redux";
 import {settingsSelector} from "../../Settings/reducer";
-import {convertWeigthForDisplay, kilogramsToPounds} from "../../common/helpers/weightConvertor";
+import {convertWeigthForDisplay} from "../../common/helpers/weightConvertor";
 
 const RoutineDetailModal = ({routine, modalVisible, setModalVisible}) => {
     const selectedWeight = useSelector(settingsSelector).weightUnit;
@@ -67,6 +66,7 @@ const RoutineDetailModal = ({routine, modalVisible, setModalVisible}) => {
                     modalVisible={isAddRoutineModalVisible}
                     setModalVisible={setIsAddRoutineModalVisible}
                     routine={routine}
+                    fromEdit={true}
                 />
 
                 {routine.exercises.map((exercise, index) => (

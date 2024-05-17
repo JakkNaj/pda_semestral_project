@@ -1,10 +1,10 @@
-import {View, Text, StyleSheet, ScrollView} from "react-native";
+import {ScrollView, Text, View} from "react-native";
 import ComponentHeader from "../../common/ComponentHeader";
-import { useSafeAreaStyles } from "../../common/View.styles";
+import {useSafeAreaStyles} from "../../common/View.styles";
 import WorkoutRow from "../helpers/WorkoutRow";
-import { popularWorkouts, forBeginners, upperBodyOnly } from "../mockData/mockWorkouts";
+import {forBeginners, popularWorkouts, upperBodyOnly} from "../mockData/mockWorkouts";
 import styles from "./Discover.styles";
-import { useState } from "react";
+import {useState} from "react";
 import WorkoutDetailModal from "../modals/WorkoutDetailModal";
 import {useDispatch, useSelector} from "react-redux";
 import {saveRoutinesToStorage} from "../../Trainings/actions";
@@ -22,7 +22,7 @@ const Discover = () => {
     const commonStyles = useSafeAreaStyles();
 
     const handleAdd = (workout) => {
-        dispatch(saveRoutinesToStorage([...trainings, {...workout, id: Date.now().toString()}]))
+        dispatch(saveRoutinesToStorage([...trainings, {...workout, id: Date.now().toString(), weightUnit: "kg"}]))
     }
 
     const isWorkoutAdded = (workout) => {
