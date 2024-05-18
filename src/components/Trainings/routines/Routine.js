@@ -54,7 +54,7 @@ const Routine = ({routine}) => {
                         contentStyle={{padding: 0}}
                         backgroundColor={"transparent"}
                     >
-                        <TouchableOpacity style={{width: 30, position: "absolute", right: 0, top: 0}}
+                        <TouchableOpacity style={{width: 42, paddingVertical: 2, paddingHorizontal: 10, position: "absolute", right: 0, top: 0}}
                                           onPress={() => setShowRoutinePopover(true)}>
                             <Icon name="ellipsis" size={25} color={colors.purple}/>
                         </TouchableOpacity>
