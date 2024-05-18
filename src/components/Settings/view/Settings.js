@@ -66,15 +66,22 @@ const Settings = () => {
         console.log('Changing inactive days to: ', days);
     }
 
-    const changeNotificationEnabled = (value) => {
+    const changeNotificationEnabled = async (value) => {
         setIsNotificationEnabled(value);
         const newSettings = { ...settings, isNotificationEnabled: value };
-        dispatch(saveSettings(newSettings));
-        if (!value) {
+        if (value) {
+            const { status } = await Notifications.requestPermissionsAsync();
+            if (status !== 'granted') {
+                alert('In order to receive notifications, you need to grant notification permissions in the settings of your device.');
+                setIsNotificationEnabled(false); // Revert the switch back to off if permissions are not granted
+                return;
+            }
+        } else {
             console.log("Cancelling all notifications");
             Notifications.cancelAllScheduledNotificationsAsync();
         }
         console.log('Changing notification enabled to: ', value);
+        dispatch(saveSettings(newSettings));
     }
 
     return (
