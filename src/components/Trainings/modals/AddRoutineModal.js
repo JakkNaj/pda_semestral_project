@@ -13,7 +13,7 @@ import {settingsSelector} from "../../Settings/reducer";
 const AddRoutineModal = ({ modalVisible, setModalVisible, routine, fromEdit = false }) => {
 
     const [exercisesOpen, setExercisesOpen] = useState(false)
-    const [workoutTitle, setWorkoutTitle] = useState(routine ? routine.title : "");
+    const [workoutTitle, setWorkoutTitle] = useState(routine ? routine.title : "Untitled Workout Routine");
     const [exercises, setExercises] = useState(routine && routine.exercises ? routine.exercises : []);
     const routineId = routine && routine.id ? routine.id : null;
     const weightUnit = routine && routine.weightUnit? routine.weightUnit : useSelector(settingsSelector).weightUnit;

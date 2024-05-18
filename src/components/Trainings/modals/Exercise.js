@@ -10,7 +10,7 @@ import {useSelector} from "react-redux";
 import {settingsSelector} from "../../Settings/reducer";
 import {convertWeigthForDisplay} from "../../common/helpers/weightConvertor";
 
-const Exercise = ({exercise, setExercises, exercises, weightUnit}) => {
+const Exercise = ({exercise, setExercises, exercises}) => {
     const selectedWeight = useSelector(settingsSelector).weightUnit;
 
     const tableHead = ["SET", `WEIGHT (${selectedWeight})`, "REPS", ""];
@@ -61,7 +61,7 @@ const Exercise = ({exercise, setExercises, exercises, weightUnit}) => {
                     ...globalStyles.defaultText,
                     fontWeight: "bold"
                 }}>{capitalizeFirstLetter(exercise?.name)}</Text>
-                <Icon name="ellipsis" size={25} color={colors.purple}/>
+                <View></View>
             </View>
             <View style={{width: "100%"}}>
                 <Table>
@@ -88,7 +88,7 @@ const Exercise = ({exercise, setExercises, exercises, weightUnit}) => {
                                     return (
                                         <View style={{justifyContent: "center"}}>
                                             <TextInput
-                                                style={{textAlign: "center"}}
+                                                style={{textAlign: "center", borderBottomWidth: 1, marginHorizontal: 18, paddingVertical: 10}}
                                                 key={columnIndex}
                                                 onChangeText={(text) => {
                                                     if (/^\d*\.?\d*$/.test(text)) {

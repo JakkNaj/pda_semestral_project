@@ -48,7 +48,6 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
     tableRow: {
-        padding: 5,
         marginVertical: 10
     },
     tableText: {
