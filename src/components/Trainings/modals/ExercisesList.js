@@ -13,6 +13,8 @@ const ExercisesList = ({ exercises, setExercises, workoutTitle, setModalVisible,
 
     const trainings = useSelector(trainingsSelector)
 
+    console.log(exercises)
+
     const handleSubmit = () => {
         const title = workoutTitle.trim() === "" ? "Untitled workout routine" : workoutTitle;
         const creationDate = new Date();
@@ -43,20 +45,18 @@ const ExercisesList = ({ exercises, setExercises, workoutTitle, setModalVisible,
     return (
         <View style={styles.exercisesDiv}>
             <ScrollView horizontal={false} showsVerticalScrollIndicator={false}>
-                {exercises.map((exercise, index) => {
-                    return (
-                        <Exercise
-                            key={`exercise-${index}`}
-                            exercise={exercise}
-                            exercises={exercises}
-                            setExercises={setExercises}
-                            weightUnit={weightUnit}
-                        />
-                    )
-                })}
+                {exercises.map((exercise, index) =>
+                    <Exercise
+                        key={`exercise-${exercise.name}-${index}`}
+                        exercise={exercise}
+                        exercises={exercises}
+                        setExercises={setExercises}
+                        weightUnit={weightUnit}
+                    />
+                )}
                 <View style={{ marginTop: 15 }}>
                     <Button
-                        title={ fromEdit ? "Update workout routine" : "Add to workout routine"}
+                        title={ fromEdit ? "Update workout routine" : "Add workout routine"}
                         onClick={() => handleSubmit()}
                     />
                 </View>

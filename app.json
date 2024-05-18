@@ -2,7 +2,7 @@
   "expo": {
     "name": "pda_semestralka",
     "slug": "pda_semestralka",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/muscleIcon.png",
     "userInterfaceStyle": "light",
@@ -15,19 +15,32 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "pdaSemestralka"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.michajo6.pda_semestralka"
     },
     "web": {
       "favicon": "./assets/muscleIcon.png"
     },
     "plugins": [
       "expo-font"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "abc0af63-199c-403d-ab8c-4db42cd7c0c0"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/abc0af63-199c-403d-ab8c-4db42cd7c0c0"
+    }
   }
 }

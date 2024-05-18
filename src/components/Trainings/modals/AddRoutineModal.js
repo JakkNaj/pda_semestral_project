@@ -4,7 +4,7 @@ import CustomModal from "../../common/CustomModal";
 import styles from "./AddRoutineModal.styles"
 import Button from "../../common/buttons/Button";
 import globalStyles from "../../common/GlobalStyles";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import AddExerciseModal from "./AddExerciseModal";
 import ExercisesList from "./ExercisesList";
 import {useSelector} from "react-redux";
@@ -13,10 +13,19 @@ import {settingsSelector} from "../../Settings/reducer";
 const AddRoutineModal = ({ modalVisible, setModalVisible, routine, fromEdit = false }) => {
 
     const [exercisesOpen, setExercisesOpen] = useState(false)
-    const [workoutTitle, setWorkoutTitle] = useState(routine ? routine.title : "Untitled Workout Routine");
-    const [exercises, setExercises] = useState(routine && routine.exercises ? routine.exercises : []);
-    const routineId = routine && routine.id ? routine.id : null;
+    const [workoutTitle, setWorkoutTitle] = useState(routine?.title ?? "Untitled Workout Routine");
+    const [exercises, setExercises] = useState([]);
+    const [routineId, setRoutineId] = useState(null);
     const weightUnit = routine && routine.weightUnit? routine.weightUnit : useSelector(settingsSelector).weightUnit;
+
+    useEffect(() => {
+        if (routine?.exercises?.length > 0) {
+            setExercises(routine.exercises)
+            setRoutineId(routine.id)
+        }
+    }, [routine])
+
+    console.log(exercises)
 
     return (
         <CustomModal
@@ -24,6 +33,12 @@ const AddRoutineModal = ({ modalVisible, setModalVisible, routine, fromEdit = fa
             modalVisible={modalVisible}
             modalId={"add-routine-modal"}
             swipeOff={true}
+            onClose={() => {
+                if (!fromEdit) {
+                    setWorkoutTitle("Untitled Workout Routine")
+                    setExercises([])
+                }
+            }}
         >
             <View style={styles.topButtonsContainer}>
                 <TopButton
@@ -43,6 +58,7 @@ const AddRoutineModal = ({ modalVisible, setModalVisible, routine, fromEdit = fa
             {exercises.length > 0
                 ?
                 <ExercisesList
+                    key={`exercises-list-${routineId ?? "add-new"}`}
                     exercises={exercises}
                     setExercises={setExercises}
                     workoutTitle={workoutTitle}

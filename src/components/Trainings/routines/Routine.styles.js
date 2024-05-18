@@ -10,7 +10,8 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         marginBottom: 30,
         display: "flex",
-        flexDirection: "row"
+        flexDirection: "row",
+        minHeight: 130
     },
     title: {
         color: colors.purple,

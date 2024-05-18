@@ -1,10 +1,11 @@
 export const popularWorkouts = [
 	{
-		id:1,
+		id: 1,
 		title: 'Simple Six-Pack',
 		target: 'Abs',
 		exercises: [
 			{
+				id: 'exercise-1',
 				name: 'Crunches',
 				sets: [
 					["1", "70", "15"],
@@ -13,6 +14,7 @@ export const popularWorkouts = [
 				]
 			},
 			{
+				id: 'exercise-2',
 				name: 'Pull-ups',
 				sets: [
 					["1", "60", "15"],
@@ -23,11 +25,12 @@ export const popularWorkouts = [
 		]
 	},
 	{
-		id:2,
+		id: 2,
 		title: 'Sleever Buster',
 		target: 'Arms',
 		exercises: [
 			{
+				id: 'exercise-3',
 				name: 'Bicep Curls',
 				sets: [
 					["1", "15", "10"],
@@ -46,6 +49,7 @@ export const forBeginners = [
 		target: 'Shoulders',
 		exercises: [
 			{
+				id: 'exercise-4',
 				name: 'Shoulder Press',
 				sets: [
 					["1", "20", "10"],
@@ -53,15 +57,15 @@ export const forBeginners = [
 					["3", "30", "10"],
 				]
 			},
-			// Add more exercises as needed
 		]
 	},
 	{
-		id:4,
+		id: 4,
 		title: 'Healthy Back',
 		target: 'Back',
 		exercises: [
 			{
+				id: 'exercise-5',
 				name: 'Deadlift',
 				sets: [
 					["1", "60", "10"],
@@ -73,10 +77,11 @@ export const forBeginners = [
 	},
 	{
 		id: 7,
-		title: 'Full Body beginner',
+		title: 'Full Body Beginner',
 		target: 'Full body',
 		exercises: [
 			{
+				id: 'exercise-6',
 				name: 'Squats',
 				sets: [
 					["1", "50", "10"],
@@ -95,6 +100,7 @@ export const upperBodyOnly = [
 		target: 'Abs',
 		exercises: [
 			{
+				id: 'exercise-7',
 				name: 'Sit-ups',
 				sets: [
 					["1", "0", "15"],
@@ -110,6 +116,7 @@ export const upperBodyOnly = [
 		target: 'Arms, Shoulders, Abs',
 		exercises: [
 			{
+				id: 'exercise-8',
 				name: 'Push-ups',
 				sets: [
 					["1", "0", "15"],

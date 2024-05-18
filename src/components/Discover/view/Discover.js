@@ -10,6 +10,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {saveRoutinesToStorage} from "../../Trainings/actions";
 import {trainingsSelector} from "../../Trainings/reducer";
 import globalStyles from "../../common/GlobalStyles";
+import {cloneDeep} from "lodash";
 
 const Discover = () => {
 
@@ -22,7 +23,7 @@ const Discover = () => {
     const commonStyles = useSafeAreaStyles();
 
     const handleAdd = (workout) => {
-        dispatch(saveRoutinesToStorage([...trainings, {...workout, id: Date.now().toString(), weightUnit: "kg"}]))
+        dispatch(saveRoutinesToStorage([...trainings, {...cloneDeep(workout), id: Date.now().toString(), weightUnit: "kg"}]))
     }
 
     const isWorkoutAdded = (workout) => {
