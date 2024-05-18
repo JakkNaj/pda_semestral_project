@@ -12,6 +12,7 @@ import {exercisesSelector} from "./src/components/Exercises/reducer";
 import {getHistoryFromStorage, getTrainingsFromStorage} from "./src/components/Trainings/actions";
 import {DefaultTheme, NavigationContainer} from "@react-navigation/native";
 import LottieView from "lottie-react-native";
+import * as Notifications from "expo-notifications";
 if (__DEV__) {
     require("./ReactotronConfig");
 }
@@ -20,6 +21,14 @@ const AppContent = () => {
     const dispatch = useDispatch();
 
     const exercisesData = useSelector(exercisesSelector)
+
+    Notifications.setNotificationHandler({
+        handleNotification: async () => ({
+            shouldShowAlert: true,
+            shouldPlaySound: false,
+            shouldSetBadge: true,
+        }),
+    });
 
     useEffect(() => {
         dispatch(getSettingsFromStorage());

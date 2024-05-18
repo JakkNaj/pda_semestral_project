@@ -42,6 +42,7 @@ export const scheduleTestingNotification = async (inactiveDays, notificationActi
 				repeats: true,
 			},
 		});
+		console.log("notification scheduled");
 	}
 }
 

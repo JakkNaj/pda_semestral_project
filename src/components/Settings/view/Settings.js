@@ -67,14 +67,14 @@ const Settings = () => {
     }
 
     const changeNotificationEnabled = (value) => {
-        setIsNotificationEnabled(value); // Optimistically update the state in the UI
+        setIsNotificationEnabled(value);
         const newSettings = { ...settings, isNotificationEnabled: value };
+        dispatch(saveSettings(newSettings));
         if (!value) {
             console.log("Cancelling all notifications");
             Notifications.cancelAllScheduledNotificationsAsync();
         }
         console.log('Changing notification enabled to: ', value);
-        dispatch(saveSettings(newSettings)); // Then dispatch the action to update the Redux state and AsyncStorage
     }
 
     return (
